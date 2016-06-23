@@ -10,5 +10,7 @@ class RoomsController < ApplicationController
   end
 
   def show
+    @room = Room.find(1)
+    @posts = @room.posts
   end
 end
