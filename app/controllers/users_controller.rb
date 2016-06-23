@@ -4,9 +4,14 @@ class UsersController < ApplicationController
   end
 
   def create
+    user = User.create approved_params
+    if user.save
+      redirect_to users_url
+    end
   end
 
   def new
+    @user = User.new
   end
 
   def edit
@@ -19,5 +24,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
+  end
+
+  def approved_params
+    params.require(:user).permit(
+      :name,
+      :email,
+      :password
+    )
   end
 end
