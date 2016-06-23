@@ -29,14 +29,6 @@ Rooms.each do |room|
   )
 end
 
-1000.times do |vote|
-  Vote.create!(
-    message_id: Message.all.sample.id,
-    value: [-1,1].sample,
-    created_at: Time.now
-  )
-end
-
 require_relative './posts'
 
 100.times do |post|
@@ -56,5 +48,14 @@ Messages.each do |message|
     content: message[:content],
     created_at: Time.now,
     post_id: Post.all.sample.id
+  )
+end
+
+1000.times do |vote|
+  Vote.create!(
+    message_id: Message.all.sample.id,
+    value: [-1,1].sample,
+    created_at: Time.now,
+    user_id: User.all.sample.id
   )
 end
