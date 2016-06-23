@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623022929) do
+ActiveRecord::Schema.define(version: 20160623023835) do
 
   create_table "messages", force: :cascade do |t|
-    t.string   "user_id"
+    t.integer  "user_id"
     t.string   "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 20160623022929) do
 
   create_table "posts", force: :cascade do |t|
     t.text     "content"
-    t.string   "user_id"
-    t.string   "room_id"
+    t.integer  "user_id"
+    t.integer  "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20160623022929) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.string   "message_id"
+    t.integer  "message_id"
     t.integer  "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
