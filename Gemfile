@@ -7,6 +7,7 @@ gem 'rails', '4.2.2'
 gem 'sqlite3'
 
 gem 'twitter-bootstrap-rails'
+gem 'bootstrap_form'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
