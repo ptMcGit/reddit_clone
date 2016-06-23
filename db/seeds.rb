@@ -12,7 +12,6 @@ require_relative './users'
 
 Users.each do |user|
   User.create!(
-    name: user[:name],
     email: user[:email],
     password: user[:password],
     created_at: Time.now
