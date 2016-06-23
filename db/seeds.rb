@@ -29,20 +29,32 @@ Rooms.each do |room|
   )
 end
 
+1000.times do |vote|
+  Vote.create!(
+    message_id: Message.all.sample.id,
+    value: [-1,1].sample,
+    created_at: Time.now
+  )
+end
+
+require_relative './posts'
+
+100.times do |post|
+  Post.create!(
+    content: Posts.sample[:content],
+    user_id: User.all.sample.id,
+    room_id: Room.all.sample.id,
+    created_at: Time.now
+  )
+end
+
 require_relative './messages'
 
 Messages.each do |message|
   Message.create!(
     user_id: User.all.sample.id,
     content: message[:content],
-    created_at: Time.now
-  )
-end
-
-rand(100).times do |vote|
-  Vote.create!(
-    message_id: Message.all.sample.id,
-    value: [-1,1].sample,
-    created_at: Time.now
+    created_at: Time.now,
+    post_id: Post.all.sample.id
   )
 end
