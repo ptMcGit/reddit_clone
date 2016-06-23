@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :rooms
   resources :messages
   resources :votes
+  resources :posts
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
