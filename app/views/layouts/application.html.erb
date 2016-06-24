@@ -27,7 +27,15 @@
           </div>
           <%= yield %>
         </div><!-- col-8 -->
+        <!-- col-4 -->
+
       </div><!-- row -->
+    <footer>
+       <% if Rails.env.development? %>
+          <p><%= params[:controller] %>#<%= params[:action] %></p>
+          <p>Time: <%= Time.now %></p>
+       <% end %>
+    </footer>
     </div><!-- container -->
 </body>
 </html>
