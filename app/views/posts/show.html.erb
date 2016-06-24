@@ -8,11 +8,13 @@
     <%= link_to "Edit Post", edit_post_url(:room_id => @post.room.id), class: "btn btn-default" %>
 </p>
 
-  <tr>
-    <td>user</td>
-    <td>content</td>
-    <td>created_at</td>
-  </tr>
+  <% if ! @messages.empty? %>
+
+    <tr>
+      <td>user</td>
+      <td>content</td>
+      <td>created at</td>
+    </tr>
 
   <% @messages.each do |message| %>
   <tr>
@@ -21,5 +23,11 @@
     <td><%= message.created_at.to_date %></td>
   </tr>
   <% end %>
+
+  <% else %>
+    <p>No replies yet.</p>
+  <% end %>
+
+
 
 </table>

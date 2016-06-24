@@ -19,7 +19,7 @@
 
 <% @posts.each do |post| %>
 <tr>
-  <td><%= link_to post.content, post_url(post) %></td>
+  <td><%= link_to post.title, post_url(post) %></td>
   <td><%= link_to post.user.email, user_url(post.user) %></td>
   <td><%= post.created_at %></td>
   <td><%= post.messages.count %></td>
