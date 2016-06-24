@@ -1,4 +1,25 @@
-posts = [
+post_titles = [
+  {
+    title: "Yes, Yes, YES..."
+  },
+  {
+    title: "Ahoy mateys!"
+  },
+  {
+    title: "where's all my peeps?"
+  },
+  {
+    title: "Extra extra!"
+  },
+  {
+    title: "Sabado gigante!"
+  },
+  {
+    title: "Ding ding ding."
+  }
+]
+
+post_content = [
   {
     content: "Tony Robbins is the best motivational speaker. If I had to do rehabilitative work I would definitely choose him over Richard Simmons."
   },
@@ -20,9 +41,10 @@ posts = [
 ]
 100.times do |post|
   Post.create!(
-    content: posts.sample[:content],
-    user_id: User.all.sample.id,
-    room_id: Room.all.sample.id,
+    title:      post_titles.sample[:title],
+    content:    post_content.sample[:content],
+    user_id:    User.all.sample.id,
+    room_id:    Room.all.sample.id,
     created_at: Time.now
   )
 end
