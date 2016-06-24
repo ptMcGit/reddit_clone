@@ -4,6 +4,10 @@
 <h3>&ldquo;<%= @post.content %>&rdquo;</h3>
 <table class="table table-hover">
 
+  <p class="text-left">
+    <%= link_to "Edit Post", edit_post_url(:room_id => @post.room.id), class: "btn btn-default" %>
+</p>
+
   <tr>
     <td>user</td>
     <td>content</td>

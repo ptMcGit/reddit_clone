@@ -1,8 +1,2 @@
 <h1>New Post</h1>
-<%= bootstrap_form_for @post do |f| %>
-<%= f.text_area :content %>
-<%= f.hidden_field    :room_id %>
-<button class="btn btn-primary">Submit</button>
-<% end %>
-
-<p>Find me in app/views/posts/new.html.erb</p>
+<%= render "form" %>

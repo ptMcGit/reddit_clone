@@ -1,0 +1,8 @@
+<%= provide(:page_header, @post.room.name) %>
+<%= provide(:subtext, @post.room.description) %>
+
+<%= bootstrap_form_for @post do |f| %>
+<%= f.text_area :content %>
+<%= f.hidden_field    :room_id %>
+<button class="btn btn-primary">Submit</button>
+<% end %>
