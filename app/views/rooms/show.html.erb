@@ -1,5 +1,14 @@
-<h1><%= @room.name %></h1>
-<h2><%= @room.description %></h2>
+<%= provide(:page_header, @room.name) %>
+<%= provide(:subtext, @room.description) %>
+
+<p class="text-left">
+  <%= link_to "New Post", new_post_url(:room_id => @room.id), class: "btn btn-default" %>
+</p>
+
+<% if flash[:notice] %>
+<div class="alert alert-success" <%= flash[:notice] %> role="alert"><%= flash[:notice] %></div>
+<% end %>
+
 <table class="table table-hover">
 <tr>
   <td>Post</td>

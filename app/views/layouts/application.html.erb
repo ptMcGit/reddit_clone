@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>RedditClone</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-<nav class="nav">
-    <ul class="nav nav-tabs">
-      <li> <%= link_to 'Home', rooms_url %> </li>
-      <% if user_signed_in? %>
-      <li><%= link_to "Account Settings", edit_user_registration_url %></li>
-      <li><%= link_to "Sign Out", destroy_user_session_url, method: :delete %></li>
-      <% end %>
-    </ul>
-  </nav>
-  <%= yield %>
-
+  <head>
+    <title>RedditClone</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8">
+          <nav class="nav">
+            <ul class="nav nav-tabs">
+              <li> <%= link_to 'Home', rooms_url %> </li>
+              <% if user_signed_in? %>
+              <li><%= link_to "Account Settings", edit_user_registration_url %></li>
+              <li><%= link_to "Sign Out", destroy_user_session_url, method: :delete %></li>
+              <% end %>
+            </ul>
+          </nav>
+          <div class="header_background page-header">
+            <h1><%= yield(:page_header) %>
+              <br>
+              <small> <%= yield(:subtext) %></small>
+            </h1>
+          </div>
+          <%= yield %>
+        </div><!-- col-8 -->
+      </div><!-- row -->
+    </div><!-- container -->
 </body>
 </html>
