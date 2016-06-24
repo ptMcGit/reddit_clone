@@ -40,6 +40,13 @@ class PostsController < ApplicationController
     @messages = @post.messages
   end
 
+  def destroy
+    Post.delete(params[:id])
+    flash[:notice] = "Post succesfully deleted."
+    redirect_to room_url(params[:room_id])
+
+  end
+
   def approved_params
     params.require(:post).permit(
       :title,
@@ -47,4 +54,5 @@ class PostsController < ApplicationController
       :room_id
     )
   end
+
 end
