@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   def index
+    raise
   end
 
   def new
@@ -14,7 +15,7 @@ class PostsController < ApplicationController
          approved_params.merge user_id: current_user.id
        )
       flash[:notice] = "successful post"
-      redirect_to room_url(approved_params[:room_id])
+      redirect_to room_path(approved_params[:room_id])
     end
   end
 
@@ -32,7 +33,7 @@ class PostsController < ApplicationController
        )
       flash[:notice] = "successfully updated."
     #end
-    redirect_to room_url(approved_params[:room_id])
+    redirect_to room_path(approved_params[:room_id])
   end
 
   def show
@@ -43,7 +44,7 @@ class PostsController < ApplicationController
   def destroy
     Post.delete(params[:id])
     flash[:notice] = "Post succesfully deleted."
-    redirect_to room_url(params[:room_id])
+    redirect_to room_path(params[:room_id])
 
   end
 

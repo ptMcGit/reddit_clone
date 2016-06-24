@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def create
     user = User.create approved_params
     if user.save
-      redirect_to rooms_url
+      redirect_to rooms_path
     end
   end
 

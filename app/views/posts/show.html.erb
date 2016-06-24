@@ -5,8 +5,8 @@
 <table class="table table-hover">
 
   <p class="text-left">
-    <%= link_to "Edit Post", edit_post_url(:room_id => @post.room.id), class: "btn btn-default" %>
-    <%= link_to "Delete Post", post_url(:room_id => @post.room.id), method: :delete, class: "btn btn-default" %>
+    <%= link_to "Edit Post", edit_post_path(:room_id => @post.room.id), class: "btn btn-default" %>
+    <%= link_to "Delete Post", post_path(:room_id => @post.room.id), method: :delete, class: "btn btn-default" %>
 </p>
 
 

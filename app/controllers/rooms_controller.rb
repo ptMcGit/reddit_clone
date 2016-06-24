@@ -31,7 +31,7 @@ class RoomsController < ApplicationController
        )
       flash[:notice] = "successfully updated."
       #end
-    redirect_to room_url
+    redirect_to room_path
   end
 
   def show

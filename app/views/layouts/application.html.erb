@@ -12,10 +12,10 @@
         <div class="col-md-8">
           <nav class="nav">
             <ul class="nav nav-tabs">
-              <li> <%= link_to 'Home', rooms_url %> </li>
+              <li> <%= link_to 'Home', rooms_path %> </li>
               <% if user_signed_in? %>
-              <li><%= link_to "Account Settings", edit_user_registration_url %></li>
-              <li><%= link_to "Sign Out", destroy_user_session_url, method: :delete %></li>
+              <li><%= link_to "Account Settings", edit_user_registration_path %></li>
+              <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
               <% end %>
             </ul>
           </nav>
