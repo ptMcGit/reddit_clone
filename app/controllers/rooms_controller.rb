@@ -18,6 +18,20 @@ class RoomsController < ApplicationController
 
 
   def edit
+    @room = Room.find(params[:id])
+  end
+
+  def update
+    @room = Room.find(params[:id])
+    #if @post.created_at > 1.hour.ago
+    #  flash[:notice] = "unable to update."
+    #else
+      @room.update(
+         approved_params
+       )
+      flash[:notice] = "successfully updated."
+      #end
+    redirect_to room_url
   end
 
   def show

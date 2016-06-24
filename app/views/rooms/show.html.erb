@@ -3,7 +3,10 @@
 
 <p class="text-left">
   <%= link_to "New Post", new_post_url(:room_id => @room.id), class: "btn btn-default" %>
+  <%= link_to "Edit Room", edit_room_url, class: "btn btn-default" %>
 </p>
+
+
 
 <% if flash[:notice] %>
 <div class="alert alert-success" <%= flash[:notice] %> role="alert"><%= flash[:notice] %></div>
