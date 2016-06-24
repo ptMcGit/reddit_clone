@@ -6,55 +6,47 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+require_relative './user_seeds'
+require_relative './room_seeds'
+require_relative './post_seeds'
 
+messages = [
+  {
+    content: "I completely disagree."
+  },
+  {
+    content: "What is a Sheboygan?"
+  },
+  {
+    content: "Half the time it's a square."
+  },
+  {
+    content: "My legs disagree."
+  },
+  {
+    content: "I a bear attacks a mime in the woods..."
+  },
+  {
+    content: "Now that's a fine apiary."
+  }
+]
 
-require_relative './users'
-
-Users.each do |user|
-  User.create!(
-    email: user[:email],
-    password: user[:password],
-    created_at: Time.now
-  )
-end
-
-require_relative './rooms'
-
-Rooms.each do |room|
-  Room.create!(
-    name: room[:name],
-    description: room[:description],
-    created_at: Time.now
-  )
-end
-
-require_relative './posts'
-
-100.times do |post|
-  Post.create!(
-    content: Posts.sample[:content],
-    user_id: User.all.sample.id,
-    room_id: Room.all.sample.id,
-    created_at: Time.now
-  )
-end
-
-require_relative './messages'
-
-Messages.each do |message|
-  Message.create!(
-    user_id: User.all.sample.id,
-    content: message[:content],
-    created_at: Time.now,
-    post_id: Post.all.sample.id
-  )
-end
-
-1000.times do |vote|
-  Vote.create!(
-    message_id: Message.all.sample.id,
-    value: [-1,1].sample,
-    created_at: Time.now,
-    user_id: User.all.sample.id
-  )
+Room.all.each do |room|
+  room.posts.each do |post|
+    rand(10).times do
+      m = Message.create!(
+        user_id: User.all.sample.id,
+        content: messages.sample[:content],
+        created_at: Time.now,
+        post_id: post.id
+      )
+      rand(10).times do |vote|
+        Vote.create!(
+          user_id: User.all.sample.id,
+          message_id: m.id,
+          value: [1,-1].sample
+        )
+      end
+    end
+  end
 end

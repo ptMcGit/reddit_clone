@@ -1,4 +1,4 @@
-Users = [
+[
   {
   email: "pw@pw.com",
   password: "password",
@@ -11,4 +11,10 @@ Users = [
   email: "gw@gw.com",
   password: "password",
   }
-]
+].each do |user|
+  User.create!(
+    email: user[:email],
+    password: user[:password],
+    created_at: Time.now
+  )
+end

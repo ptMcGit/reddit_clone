@@ -1,4 +1,4 @@
-Posts = [
+posts = [
   {
     content: "Tony Robbins is the best motivational speaker. If I had to do rehabilitative work I would definitely choose him over Richard Simmons."
   },
@@ -18,3 +18,11 @@ Posts = [
     content: "You will are have my opinions. Buy, buy, buy."
   },
 ]
+100.times do |post|
+  Post.create!(
+    content: posts.sample[:content],
+    user_id: User.all.sample.id,
+    room_id: Room.all.sample.id,
+    created_at: Time.now
+  )
+end
