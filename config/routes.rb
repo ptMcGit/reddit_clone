@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :rooms
-  resources :messages
+  resources :comments
   resources :votes
   resources :posts
 

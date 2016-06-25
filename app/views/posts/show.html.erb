@@ -10,7 +10,7 @@
 </p>
 
 
-  <% if ! @messages.empty? %>
+  <% if ! @comments.empty? %>
 
     <tr>
       <td>user</td>
@@ -18,11 +18,11 @@
       <td>created at</td>
     </tr>
 
-  <% @messages.each do |message| %>
+  <% @comments.each do |comment| %>
   <tr>
-    <td><%= link_to message.user.email, message.user %></td>
-    <td><%= message.content %></td>
-    <td><%= message.created_at.to_date %></td>
+    <td><%= link_to comment.user.email, comment.user %></td>
+    <td><%= comment.content %></td>
+    <td><%= comment.created_at.to_date %></td>
   </tr>
   <% end %>
 

@@ -10,7 +10,7 @@ require_relative './user_seeds'
 require_relative './room_seeds'
 require_relative './post_seeds'
 
-messages = [
+comments = [
   {
     content: "I completely disagree."
   },
@@ -36,14 +36,14 @@ Room.all.each do |room|
     rand(10).times do
       m = Message.create!(
         user_id: User.all.sample.id,
-        content: messages.sample[:content],
+        content: comments.sample[:content],
         created_at: Time.now,
         post_id: post.id
       )
       rand(10).times do |vote|
         Vote.create!(
           user_id: User.all.sample.id,
-          message_id: m.id,
+          comment_id: m.id,
           value: [1,-1].sample
         )
       end

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   has_many :posts
-  has_many :messages, through: :posts
+  has_many :comments, through: :posts
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
