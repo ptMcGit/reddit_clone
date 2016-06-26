@@ -31,20 +31,28 @@ comments = [
   }
 ]
 
+def random_votes total_to_provide
+  ups = rand(total_to_provide)
+  downs = total_to_provide - ups
+  [-1] * downs +
+    [1] * ups
+end
+
 Room.all.each do |room|
   room.posts.each do |post|
     rand(10).times do
-      m = Message.create!(
+      m = Comment.create!(
         user_id: User.all.sample.id,
         content: comments.sample[:content],
         created_at: Time.now,
         post_id: post.id
       )
-      rand(10).times do |vote|
+      votes_to_cast = random_votes(10)
+      votes_to_cast.length.times do |vote|
         Vote.create!(
           user_id: User.all.sample.id,
-          comment_id: m.id,
-          value: [1,-1].sample
+          post_id: post.id,
+          value: votes_to_cast.shift
         )
       end
     end

@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
   has_many :posts
+  has_many :votes
   has_many :comments, through: :posts
 
   devise :database_authenticatable, :registerable,
