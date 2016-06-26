@@ -6,27 +6,34 @@
   <%= link_to "Edit Room", edit_room_path, class: "btn btn-default" %>
 </p>
 
-
-
 <% if flash[:notice] %>
 <div class="alert alert-success" <%= flash[:notice] %> role="alert"><%= flash[:notice] %></div>
 <% end %>
 
 <table class="table table-hover">
-<tr>
-  <td>Post</td>
-  <td>User</td>
-  <td>Added</td>
-  <td>Total Messages</td>
-</tr>
+  <tr>
+    <td>Score</td>
+    <td>Vote</td>
+    <td>Post</td>
+    <td>User</td>
+    <td>Added</td>
+    <td>Total Messages</td>
+  </tr>
 
-<% @posts.each do |post| %>
-<tr>
-  <td><%= link_to post.title, post_path(post) %></td>
-  <td><%= link_to post.user.email, user_path(post.user) %></td>
-  <td><%= post.created_at %></td>
-  <td><%= post.comments.count %></td>
-</tr>
-<% end %>
+  <% @posts.each do |post| %>
+  <tr>
+    <td><%= post.sum %></td>
+    <td>
+      <div>
+              <%= link_to "", votes_path(:value => 1, :post_id => post.id), method: "post", class: "btn btn-default fa fa-thumbs-o-up fa-lg" %>
+
+        <%= link_to "", votes_path(:value => -1, :post_id => post.id), method: "post", class: "btn btn-default fa fa-thumbs-o-down fa-lg" %>
+    </td>
+    <td><%= link_to post.title, post_path(post) %></td>
+    <td><%= link_to post.user.email, user_path(post.user) %></td>
+    <td><%= post.created_at %></td>
+    <td><%= post.comments.count %></td>
+  </tr>
+  <% end %>
 
 </table>
