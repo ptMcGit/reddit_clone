@@ -7,6 +7,7 @@ gem 'rails', '4.2.2'
 gem 'sqlite3'
 
 gem 'devise'
+gem 'pundit'
 
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap_form'
