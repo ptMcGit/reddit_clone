@@ -7,6 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 require_relative './user_seeds'
+require_relative './admin_seeds'
 require_relative './room_seeds'
 require_relative './post_seeds'
 
