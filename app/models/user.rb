@@ -8,4 +8,13 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  def admin?
+    if Admin.find_by(id)
+      return true
+    else
+      return false
+    end
+  end
+
 end
