@@ -34,9 +34,14 @@ class ApplicationPolicy
     false
   end
 
+  def is_admin?
+    Admin.find_by(user_id: @user.id)
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end
+
 
   class Scope
     attr_reader :user, :scope
@@ -50,4 +55,5 @@ class ApplicationPolicy
       scope
     end
   end
-end
+
+  end

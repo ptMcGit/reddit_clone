@@ -7,7 +7,17 @@ class PostPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin?
+    user.is_admin?
+  end
+
+  def destroy?
+    is_owner? || is_admin?
+  end
+
+  private
+
+  def is_owner?
+    @user == @post.user
   end
 
 end
