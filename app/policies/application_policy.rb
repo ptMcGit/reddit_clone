@@ -38,6 +38,10 @@ class ApplicationPolicy
     Admin.find_by(user_id: @user.id)
   end
 
+  def is_moderator?
+    Moderator.where(room_id: @post.room_id).pluck(:user_id).include? @user.id
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end

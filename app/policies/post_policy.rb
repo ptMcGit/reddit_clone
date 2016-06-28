@@ -11,7 +11,9 @@ class PostPolicy < ApplicationPolicy
   end
 
   def destroy?
-    is_owner? || is_admin?
+    is_moderator? ||
+      is_owner? ||
+      is_admin?
   end
 
   private
