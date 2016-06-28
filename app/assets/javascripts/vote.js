@@ -11,6 +11,14 @@ $(document).ready(function () {
         //$.ajax(path, method: "POST" data: { post_id: current_post, value: vote_value })
         $(this).addClass("btn-primary")
         $(this).closest("div").find(".btn-downvote").removeClass("btn-primary")
+        $.ajax({
+            url: "/votes.json",
+            method: "POST",
+            data: { post_id: current_post, value: vote_value},
+            success: function() { alert("request successful") },
+            error:      function() { alert("request errored") }
+        })
+
 
 
     })
@@ -20,6 +28,14 @@ $(document).ready(function () {
                 console.log(current_post, vote_value)
         $(this).addClass("btn-primary")
         $(this).closest("div").find(".btn-upvote").removeClass("btn-primary")
+        $.ajax({
+            url: "/votes.json",
+            method: "POST",
+            data: { post_id: current_post, value: vote_value},
+            success: function() { alert("request successful") },
+            error:      function() { alert("request errored") }
+        })
+
 
     })
 })
