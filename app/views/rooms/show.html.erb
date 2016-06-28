@@ -24,9 +24,9 @@
   <tr>
     <td><%= post.sum %></td>
     <td>
-      <div class="vote-box" data-vote-value="1">
-        <a href="#" data-upvote="1" class="btn btn-default fa fa-thumbs-o-up fa-lg upvote-btn"></a>
-        <a href="#" class="btn btn-default fa fa-thumbs-o-down fa-lg downvote-btn"></a>
+      <div class="vote-box" data-post-value="<%= post.id %>">
+        <a href="#" data-vote-value="1" class="btn btn-default fa fa-thumbs-o-up fa-lg btn-upvote"></a>
+        <a href="#" data-vote-value="-1" class="btn btn-default fa fa-thumbs-o-down fa-lg btn-downvote"></a>
       </div>
     </td>
     <td><%= link_to post.title, post_path(post) %></td>
