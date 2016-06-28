@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  attr_reader :user, :post
+
   def index
     @posts = Post.all
     authorize @posts

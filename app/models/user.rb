@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   def admin?
-    if Admin.find_by(id)
+    if Admin.find_by(user_id: id)
       return true
     else
       return false
