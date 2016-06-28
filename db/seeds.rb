@@ -19,23 +19,7 @@ def random_votes total_to_provide
     [1] * ups
 end
 
-def create_moderator_user room_name
-  User.create!(
-    email: room_name.sub(/([^ ]+)([ ]+)([^ ]+)([ ]|$)/, '\1@\3').downcase,
-    password: "password"
-  )
-end
-
 Room.all.each do |room|
-
-  # create a moderator
-
-  mod =  create_moderator_user(room.name)
-
-  Moderator.create!(
-    user_id: mod.id,
-    room_id: room.id
-  )
 
   # create some posts
 

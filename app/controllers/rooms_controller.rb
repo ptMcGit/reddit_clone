@@ -9,11 +9,11 @@ class RoomsController < ApplicationController
   end
 
   def create
-    r = Room.create(
-         approved_params
-       )
+    r = Room.create!(
+      approved_params.merge({ user_id: current_user.id})
+    )
       flash[:notice] = "Room successfully created."
-      redirect_to rooms
+      redirect_to rooms_path
   end
 
 
@@ -37,6 +37,13 @@ class RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     @posts = @room.posts
+  end
+
+  def destroy
+    @room = Room.find(params[:id])
+    authorize @room
+    @room.destroy
+    redirect_to rooms_path
   end
 
   def approved_params

@@ -1,3 +1,10 @@
+def create_moderator_user room_name
+  User.create!(
+    email: room_name.sub(/([^ ]+)([ ]+)([^ ]+)([ ]|$)/, '\1@\3').downcase,
+    password: "password"
+  )
+end
+
 [
   {
   name: "Advanced Buzzardry",
@@ -20,9 +27,13 @@
     description: "Wisdom and other wares."
   }
 ].each do |room|
+  # create a user to be assigned as moderator
+  mod =  create_moderator_user(room[:name])
+  # create room, and callback results in new moderator
   Room.create!(
     name: room[:name],
     description: room[:description],
-    created_at: Time.now
+    created_at: Time.now,
+    user_id: mod.id
   )
 end

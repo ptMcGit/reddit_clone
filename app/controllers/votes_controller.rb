@@ -7,7 +7,7 @@ class VotesController < ApplicationController
         user_id: current_user.id
       )
     else
-      flash[:notice] = "You are not allowed to vote on that post again!"
+      #flash[:notice] = "You are not allowed to vote on that post again!"
     end
     redirect_to :back
   end
