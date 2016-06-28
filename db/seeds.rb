@@ -10,27 +10,7 @@ require_relative './user_seeds'
 require_relative './admin_seeds'
 require_relative './room_seeds'
 require_relative './post_seeds'
-
-comments = [
-  {
-    content: "I completely disagree."
-  },
-  {
-    content: "What is a Sheboygan?"
-  },
-  {
-    content: "Half the time it's a square."
-  },
-  {
-    content: "My legs disagree."
-  },
-  {
-    content: "I a bear attacks a mime in the woods..."
-  },
-  {
-    content: "Now that's a fine apiary."
-  }
-]
+require_relative './comment_seeds'
 
 def random_votes total_to_provide
   ups = rand(total_to_provide)
@@ -39,15 +19,37 @@ def random_votes total_to_provide
     [1] * ups
 end
 
+def create_moderator_user room_name
+  User.create!(
+    email: room_name.sub(/([^ ]+)([ ]+)([^ ]+)([ ]|$)/, '\1@\3').downcase,
+    password: "password"
+  )
+end
+
 Room.all.each do |room|
+
+  # create a moderator
+
+  mod =  create_moderator_user(room.name)
+
+  Moderator.create!(
+    user_id: mod.id,
+    room_id: room.id
+  )
+
+  # create some posts
+
   room.posts.each do |post|
     rand(10).times do
       m = Comment.create!(
         user_id: User.all.sample.id,
-        content: comments.sample[:content],
+        content: random_comment,
         created_at: Time.now,
         post_id: post.id
       )
+
+      # cast some votes
+
       votes_to_cast = random_votes(10)
       votes_to_cast.length.times do |vote|
         Vote.create!(
