@@ -33,7 +33,8 @@
     <footer>
        <% if Rails.env.development? %>
           <p><%= params[:controller] %>#<%= params[:action] %></p>
-          <p>Time: <%= Time.now %></p>
+       <p>Time: <%= Time.now %></p>
+       <p>User: <%= current_user ? current_user.email : 'none' %></p>
        <% end %>
     </footer>
     </div><!-- container -->
