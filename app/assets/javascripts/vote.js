@@ -13,7 +13,6 @@ var updateStaticValue = function (target, vote_value) {
     var value = $(target.parent().closest("tr").find('td')[0])
     var index = target.parent().data("post-value")
     value.text(staticValues[index] + vote_value)
-    console.log("hey", value, target.parent().data("post-value"))
 }
 
 var serverVoteRequest = function(vote_object, success_function) {
@@ -40,14 +39,14 @@ var staticValues = []
 
 var styleForStartingVoteValues = function() {
     var voteBoxes = $(".vote-box")
+
     for (i = 0; i < voteBoxes.length; i++) {
         var vote    = $(voteBoxes[i]).data('static-vote-value')
         var post_id = $(voteBoxes[i]).data('post-value')
         staticValues[post_id] = vote
-        console.log(vote)
+
         switch (vote) {
         case 1:
-            console.log("something")
             styleAsUpvote($(voteBoxes[i]).closest("div").find(".btn-upvote"))
             break
         case -1:
