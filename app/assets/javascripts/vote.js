@@ -63,10 +63,12 @@ var styleForStartingVoteValues = function() {
 
 $(document).ready(function() {
     styleForStartingVoteValues()
-    $(".btn-upvote").click(function() {
+    $(".btn-upvote").click(function(e) {
+        e.preventDefault()
         serverVoteRequest($(this), styleAsUpvote)
     })
-    $(".btn-downvote").click(function() {
+    $(".btn-downvote").click(function(e) {
+        e.preventDefault()
         serverVoteRequest($(this), styleAsDownvote)
     })
 })
