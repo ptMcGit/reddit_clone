@@ -37,6 +37,8 @@ class RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     @posts = @room.posts
+    @votes = {}
+    current_user.votes.map { |o| @votes[o.post_id] = o.value }
   end
 
   def destroy
