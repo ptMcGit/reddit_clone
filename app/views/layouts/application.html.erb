@@ -23,9 +23,20 @@
             </ul>
           </nav>
           <div class="header_background page-header">
-            <h1><%= yield(:page_header) %>
+            <h1>
+              <% if yield(:page_header).empty? %>
+              <%= "N Rooms" %>
+              <% else %>
+              <%= yield(:page_header) %>
+              <% end %>
               <br>
-              <small> <%= yield(:subtext) %></small>
+              <small>
+              <% if yield(:subtext).empty? %>
+              <%= "\"If you wish to make an apple pie from scratch, you must first invent the universe.\"" %>
+              <% else %>
+              <%= yield(:subtext) %>
+              <% end %>
+              </small>
             </h1>
           </div>
           <%= yield %>
