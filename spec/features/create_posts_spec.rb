@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'pry'
 
-describe "RegularUser", type: :feature do
+describe "RegisteredUser", type: :feature do
 
   let(:room) { create :room }
   let(:user) { create :user }
@@ -35,6 +35,9 @@ describe "RegularUser", type: :feature do
       to change { Post.count }.by 1
 
     expect(page).to have_content post_title
-    save_and_open_page
   end
+
+  it "can edit a post less than an hour old"
+  it "cannot edit a post more than an hour old"
+  it "can delete a post"
 end
