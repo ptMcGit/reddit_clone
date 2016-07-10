@@ -1,6 +1,7 @@
 class Room < ActiveRecord::Base
   has_many      :posts
   has_many      :moderators
+  belongs_to    :user
 
   after_create do
     Moderator.create!(

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many      :posts
   has_many      :votes
   has_many      :comments, through: :posts
+  has_many      :rooms
 
   has_one :admin
 
