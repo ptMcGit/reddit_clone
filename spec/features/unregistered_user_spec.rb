@@ -1,8 +1,8 @@
 require 'rails_helper'
 require 'pry'
 
-describe "UnregisteredUsers", type: :feature do
-  it "can create a user account" do
+describe "SignUp", type: :feature do
+ it "can become a regular user" do
     expect {
       visit "/"
       click_on "Sign Up"
@@ -11,8 +11,8 @@ describe "UnregisteredUsers", type: :feature do
       fill_in "user[password_confirmation]", with: "password"
       click_on "Sign up"
     }.
-      to change { User.count }
-    binding.pry
-    expect(current_path). to eq(rooms_path)
+      to change { User.count }.by 1
+    expect(current_path).
+      to eq(root_path)
   end
 end
