@@ -10,14 +10,14 @@
 <div class="alert alert-success" <%= flash[:notice] %> role="alert"><%= flash[:notice] %></div>
 <% end %>
 
-<table class="table table-hover">
+<table class="table table-hover posts-table">
   <tr>
-    <td>Score</td>
-    <td>Vote</td>
-    <td>Post</td>
-    <td>User</td>
-    <td>Added</td>
-    <td>Total Messages</td>
+    <th>Score</th>
+    <th>Vote</th>
+    <th>Post</th>
+    <th>User</th>
+    <th>Added</th>
+    <th>Total Messages</th>
   </tr>
 
   <% @posts.each do |post| %>
