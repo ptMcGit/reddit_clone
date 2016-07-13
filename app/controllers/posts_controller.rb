@@ -18,6 +18,11 @@ class PostsController < ApplicationController
     authorize @post
   end
 
+  def edit
+    @post = Post.find(params[:id])
+    authorize @post
+  end
+
   def create
     @post = @room.posts.new( approved_params.merge(user_id: current_user.id) )
     authorize @post
@@ -29,11 +34,6 @@ class PostsController < ApplicationController
       render :new
     end
 
-  end
-
-  def edit
-    @post = Post.find(params[:id])
-    authorize @post
   end
 
   def update
