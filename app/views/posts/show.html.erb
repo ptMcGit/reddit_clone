@@ -1,5 +1,6 @@
 <%= provide(:page_header, @post.room.name) %>
 <%= provide(:subtext, @post.room.description) %>
+<%= provide(:room_link, room_path(@post.room) ) %>
 
 <h3>&ldquo;<%= @post.content %>&rdquo;</h3>
 <table class="table table-hover">

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>RedditClone</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
+
   <body>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-8">
-          <nav class="nav">
-            <ul class="nav nav-tabs">
+
+          <!-- navbar -->
+          <nav class="nav"><ul class="nav nav-tabs">
               <li> <%= link_to 'Home', rooms_path %> </li>
+
               <% if user_signed_in? %>
               <li><%= link_to "Account Settings", edit_user_registration_path %></li>
               <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
@@ -20,37 +24,57 @@
               <li><%= link_to "Log In", new_user_session_path %></li>
               <li><%= link_to "Sign Up", new_user_registration_path %></li>
               <% end %>
-            </ul>
-          </nav>
+          </ul></nav>
+          <!-- navbar -->
+
+          <!-- room navbar -->
+          <ol class="breadcrumb">
+            <% @carousel.each do |room| %>
+            <li><%= link_to room.name, room_path(room.id) %></li>
+            <% end %>
+          </ol>
+          <!-- room navbar -->
+
+
           <div class="header_background page-header">
             <h1>
               <% if yield(:page_header).empty? %>
-              <%= "N Rooms" %>
+              <a href="<%= root_path %>" >
+                <%= "N Rooms" %>
+              </a>
               <% else %>
-              <%= yield(:page_header) %>
+              <a href="<%= yield(:room_link) %>">
+                <%= yield(:page_header) %>
+              </a>
               <% end %>
               <br>
               <small>
-              <% if yield(:subtext).empty? %>
-              <%= "\"If you wish to make an apple pie from scratch, you must first invent the universe.\"" %>
-              <% else %>
-              <%= yield(:subtext) %>
-              <% end %>
+                <% if yield(:subtext).empty? %>
+                <%= "\"If you wish to make an apple pie from scratch, you must first invent the universe.\"" %>
+                <% else %>
+                <%= yield(:subtext) %>
+                <% end %>
               </small>
             </h1>
           </div>
           <%= yield %>
-        </div><!-- col-8 -->
+        </div>
+        <!-- col-8 -->
+
+        <!-- col-4 -->
+        <div class="col-md-4">
+        </div>
         <!-- col-4 -->
 
-      </div><!-- row -->
-    <footer>
-       <% if Rails.env.development? %>
+        </div><!-- row -->
+        <footer>
+          <% if Rails.env.development? %>
           <p><%= params[:controller] %>#<%= params[:action] %></p>
-       <p>Time: <%= Time.now %></p>
-       <p>User: <%= current_user ? current_user.email : 'none' %></p>
-       <% end %>
-    </footer>
-    </div><!-- container -->
-</body>
+          <p>Time: <%= Time.now %></p>
+          <p>User: <%= current_user ? current_user.email : 'none' %></p>
+          <% end %>
+        </footer>
+      </div><!-- container -->
+
+  </body>
 </html>
