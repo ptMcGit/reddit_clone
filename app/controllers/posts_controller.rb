@@ -1,47 +1,55 @@
 class PostsController < ApplicationController
-  attr_reader :user, :post
+  before_action :set_room, only: [:new, :create]
+  after_action :verify_authorized
 
   def index
     @posts = Post.all
     authorize @posts
   end
 
+  def show
+    @post = Post.find(params[:id])
+    @comments = @post.comments
+    authorize @post
+  end
+
   def new
-       @post = Post.new(
-         room_id: params[:room_id],
-         created_at: Time.now
-       )
+    @post = @room.posts.new
+    authorize @post
   end
 
   def create
-    if @post = Post.create(
-         approved_params.merge user_id: current_user.id
-       )
+    @post = @room.posts.new( approved_params.merge(user_id: current_user.id) )
+    authorize @post
+
+    if @post.save
       flash[:notice] = "successful post"
-      redirect_to room_path(approved_params[:room_id])
+      redirect_to @room
+    else
+      render :new
     end
+
   end
 
   def edit
     @post = Post.find(params[:id])
+    authorize @post
   end
 
   def update
     @post = Post.find(params[:id])
+    authorize @post
+
     #if @post.created_at > 1.hour.ago
     #  flash[:notice] = "unable to update."
     #else
-      @post.update(
-         content: approved_params[:content]
-       )
-      flash[:notice] = "successfully updated."
+    @post.update(
+      content: approved_params[:content]
+    )
+    flash[:notice] = "successfully updated."
     #end
-    redirect_to room_path(approved_params[:room_id])
-  end
-
-  def show
-    @post = Post.find(params[:id])
-    @comments = @post.comments
+      #redirect_to room_path(approved_params[:room_id])
+      redirect_to room_path(@post.room)
   end
 
   def destroy
@@ -52,8 +60,14 @@ class PostsController < ApplicationController
     redirect_to room_path(params[:room_id])
   end
 
+  private
+
+  def set_room
+    @room = Room.find(params[:room_id])
+  end
+
   def approved_params
-    params.require(:post).permit(
+    params.permit(
       :title,
       :content,
       :room_id

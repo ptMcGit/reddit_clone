@@ -1,13 +1,27 @@
 class PostPolicy < ApplicationPolicy
-  attr_reader :user, :post
-
-  def initialize(user, post)
-    @user = user
-    @post = post
-  end
 
   def index?
     user.is_admin?
+  end
+
+  def show?
+    true
+  end
+
+  def new?
+    true
+  end
+
+  def edit?
+    is_owner?
+  end
+
+  def create?
+    is_owner?
+  end
+
+  def update?
+    is_owner?
   end
 
   def destroy?
@@ -18,8 +32,9 @@ class PostPolicy < ApplicationPolicy
 
   private
 
-  def is_owner?
-    @user == @post.user
+  def is_moderator?
+    Moderator.where(room_id: @post.room_id).pluck(:user_id).include? @user.id
   end
+
 
 end

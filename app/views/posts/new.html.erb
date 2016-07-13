@@ -1,2 +1,19 @@
+<%= render "post_header" %>
 <h1>New Post</h1>
-<%= render "form" %>
+
+<%= form_tag(room_posts_path, method: "post") do %>
+
+<div class="form-group">
+  <%= label_tag(:title, "Title") %><br>
+  <%= text_field_tag(:title, @post.title, class: 'form-control') %><br>
+</div>
+
+<div class="form-group">
+  <%= label_tag(:content, "Content") %><br>
+  <%= text_area_tag(:content, @post.content, class: 'form-control') %><br>
+</div>
+
+<div class="form-group">
+  <%= submit_tag("Submit", class: "btn btn-primary") %>
+</div>
+<% end %>
