@@ -20,7 +20,7 @@ var serverVoteRequest = function(vote_object, success_function) {
     var vote_value = vote_object.data("vote-value")
 
     $.ajax({
-        url:        "/votes.json",
+        url:        "/posts/" + current_post + "/votes.json",
         method:     "POST",
         data: {
             post_id:
