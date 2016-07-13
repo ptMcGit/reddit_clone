@@ -2,7 +2,7 @@
 <%= provide(:subtext, @room.description) %>
 
 <p class="text-left">
-  <%= link_to "New Post", new_post_path(:room_id => @room.id), class: "btn btn-default" %>
+  <%= link_to "New Post", new_room_post_path(:room_id => @room.id), class: "btn btn-default" %>
   <%= link_to "Edit Room", edit_room_path, class: "btn btn-default" %>
 </p>
 
@@ -35,8 +35,8 @@
       </div>
     </td>
     <td>
-    <%= link_to "", votes_path(:value => 1, :post_id => post.id), method: "post", class: "btn btn-default fa fa-thumbs-o-up fa-lg" %>
-    <%= link_to "", votes_path(:value => -1, :post_id => post.id), method: "post", class: "btn btn-default fa fa-thumbs-o-down fa-lg" %>
+    <%= link_to "", new_post_vote_path(:value => 1, :post_id => post.id), method: "post", class: "btn btn-default fa fa-thumbs-o-up fa-lg" %>
+    <%= link_to "", new_post_vote_path(:value => -1, :post_id => post.id), method: "post", class: "btn btn-default fa fa-thumbs-o-down fa-lg" %>
     </td>
     <td><%= link_to post.title, post_path(post) %></td>
     <td><%= link_to post.user.email, user_path(post.user) %></td>
