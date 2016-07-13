@@ -34,18 +34,10 @@ class ApplicationPolicy
     false
   end
 
-  def is_admin?
-    Admin.find_by(user_id: @user.id)
-  end
-
-  def is_moderator?
-    Moderator.where(room_id: @post.room_id).pluck(:user_id).include? @user.id
-  end
 
   def scope
     Pundit.policy_scope!(user, record.class)
   end
-
 
   class Scope
     attr_reader :user, :scope
@@ -60,4 +52,15 @@ class ApplicationPolicy
     end
   end
 
+  def is_owner?
+    @user == @record.user
   end
+
+  def is_admin?
+    Admin.find_by(user_id: @user.id)
+  end
+
+
+
+
+end

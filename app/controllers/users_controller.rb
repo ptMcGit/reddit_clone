@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  skip_after_action :verify_authorized, only: [:new]
+
   def index
     @users = User.all
   end
