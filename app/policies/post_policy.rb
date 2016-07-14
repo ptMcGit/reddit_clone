@@ -1,7 +1,7 @@
 class PostPolicy < ApplicationPolicy
 
   def index?
-    user.is_admin?
+    is_admin?
   end
 
   def show?
