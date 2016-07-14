@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root 'rooms#index'
 
+
+  get "/posts" => "posts#index"
+
   concern :voteable do
     resources :votes
   end
@@ -12,6 +15,7 @@ Rails.application.routes.draw do
   resources :rooms, shallow: true  do
     resources :posts, concerns: :voteable
   end
+
 
 
 end
