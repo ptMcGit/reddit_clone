@@ -18,7 +18,8 @@ class ApplicationController < ActionController::Base
     begin
       redirect_to :back
     rescue
-      redirect_to root_path
+      render status: 404
+#      redirect_to root_path
     end
   end
 

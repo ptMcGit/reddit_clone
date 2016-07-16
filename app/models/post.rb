@@ -4,6 +4,9 @@ class Post < ActiveRecord::Base
   has_many :comments
   has_many :votes
 
+  validates :content, presence: true
+  validates :title, presence: true
+
   def sum
     self.votes.sum("value")
   end

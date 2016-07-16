@@ -31,6 +31,7 @@ class PostsController < ApplicationController
       flash[:notice] = "successful post"
       redirect_to @room
     else
+      flash[:notice] = "missing"
       render :new
     end
 
@@ -39,23 +40,17 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     authorize @post
+    @post.update(approved_params)
 
-    #if @post.created_at > 1.hour.ago
-    #  flash[:notice] = "unable to update."
-    #else
-    @post.update(
-      content: approved_params[:content]
-    )
     flash[:notice] = "successfully updated."
-    #end
-      #redirect_to room_path(approved_params[:room_id])
-      redirect_to room_path(@post.room)
+
+    redirect_to room_path(@post.room)
   end
 
   def destroy
     @post = Post.find(params[:id])
     authorize @post
-    Post.delete(params[:id])
+    @post.destroy
     flash[:notice] = "Post succesfully deleted."
     redirect_to room_path(params[:room_id])
   end

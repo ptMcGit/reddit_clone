@@ -25,8 +25,10 @@ RSpec.configure do |config|
 
   config.include Devise::TestHelpers, :type => :controller
 
-  config.before :each, type: :controller do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
-  end
+  #config.before :each, type: :controller do
+    #@request.env["devise.mapping"] = Devise.mappings[:user]
+    #@request.env["devise.mapping"] = Devise.mappings[:admin]
+    #binding.pry
+  #end
   config.include FactoryGirl::Syntax::Methods
 end

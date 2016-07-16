@@ -33,7 +33,7 @@ class PostPolicy < ApplicationPolicy
   private
 
   def is_moderator?
-    Moderator.where(room_id: @post.room_id).pluck(:user_id).include? @user.id
+    Moderator.where(room_id: @record.room_id).pluck(:user_id).include? @user.id
   end
 
 
