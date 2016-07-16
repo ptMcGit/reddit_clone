@@ -31,7 +31,6 @@ class PostsController < ApplicationController
       flash[:notice] = "successful post"
       redirect_to @room
     else
-      flash[:notice] = "missing"
       render :new
     end
 
