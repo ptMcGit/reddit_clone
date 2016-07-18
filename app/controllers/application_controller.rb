@@ -13,17 +13,9 @@ class ApplicationController < ActionController::Base
 
   after_action :verify_authorized, unless: :devise_controller?
 
-  rescue_from Pundit::NotAuthorizedError do |e|
-    flash[:danger] = "NO!"
-    begin
-      redirect_to :back
-    rescue
-      render status: 404
-#      redirect_to root_path
-    end
-  end
+  rescue_from Pundit::NotAuthorizedError, :with => :not_authorized
 
-  protected
+protected
 
   def set_carousel
     @carousel = Room.all.first(5)
@@ -36,5 +28,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:edit) do |account_params|
       account_params.permit(:email, :password, :current_password)
     end
+  end
+
+private
+
+  def not_authorized
+    redirect_to '/404'
   end
 end
