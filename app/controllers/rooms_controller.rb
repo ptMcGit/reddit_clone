@@ -1,41 +1,10 @@
 class RoomsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: :index
-  skip_after_action :verify_authorized, only: [:show, :index]
+  skip_after_action :verify_authorized, only: [:index, :show, :new, :create]
 
   def index
     @rooms = Room.all
-  end
-
-  def new
-    @room = Room.new(
-      )
-  end
-
-  def create
-    r = Room.create!(
-      approved_params.merge({ user_id: current_user.id})
-    )
-      flash[:notice] = "Room successfully created."
-      redirect_to rooms_path
-  end
-
-
-  def edit
-    @room = Room.find(params[:id])
-  end
-
-  def update
-    @room = Room.find(params[:id])
-    #if @post.created_at > 1.hour.ago
-    #  flash[:notice] = "unable to update."
-    #else
-      @room.update(
-         approved_params
-       )
-      flash[:notice] = "successfully updated."
-      #end
-    redirect_to room_path
   end
 
   def show
@@ -45,12 +14,29 @@ class RoomsController < ApplicationController
     current_user.votes.map { |o| @votes[o.post_id] = o.value }
   end
 
+  def new
+    @room = Room.new
+  end
+
+  def create
+    @room = Room.new(
+      approved_params.merge({ user_id: current_user.id})
+    )
+    if @room.save
+      flash[:notice] = "Room successfully created."
+      redirect_to rooms_path
+    else
+      flash[:notice] =  @room.errors.full_messages
+      render :new
+    end
+  end
+
   def destroy
     @room = Room.find(params[:id])
     authorize @room
     @room.destroy
     redirect_to rooms_path
-  end
+  enod
 
   def approved_params
     params.require(:room).permit(
