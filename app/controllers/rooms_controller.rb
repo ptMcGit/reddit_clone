@@ -18,6 +18,11 @@ class RoomsController < ApplicationController
     @room = Room.new
   end
 
+  def edit
+    @room = Room.find(params[:id])
+    authorize @room
+  end
+
   def create
     @room = Room.new(
       approved_params.merge({ user_id: current_user.id})
@@ -36,7 +41,7 @@ class RoomsController < ApplicationController
     authorize @room
     @room.destroy
     redirect_to rooms_path
-  enod
+  end
 
   def approved_params
     params.require(:room).permit(

@@ -14,6 +14,10 @@ class RoomPolicy < ApplicationPolicy
     true
   end
 
+  def edit?
+    true
+  end
+
   def destroy?
     is_owner? ||
       is_admin?
