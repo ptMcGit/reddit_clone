@@ -3,7 +3,12 @@
 
 <p class="text-left">
   <%= link_to "New Post", new_room_post_path(:room_id => @room.id), class: "btn btn-default" %>
+
+
+  <% if policy(@room).is_owner? %>
   <%= link_to "Edit Room", edit_room_path, class: "btn btn-default" %>
+    <% end %>
+
 </p>
 
 <%= render "layouts/flash" %>
