@@ -39,8 +39,13 @@ class RoomsController < ApplicationController
   def destroy
     @room = Room.find(params[:id])
     authorize @room
-    @room.destroy
-    redirect_to rooms_path
+    if @room.destroy
+      flash[:notice] = "#{@room.name} is no longer..."
+      redirect_to rooms_path
+    else
+      flash[:notice] =  @room.errors.full_messages
+      redirect_to rooms_path
+    end
   end
 
   def approved_params
