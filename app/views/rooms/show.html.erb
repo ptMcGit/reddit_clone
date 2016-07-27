@@ -6,9 +6,7 @@
   <%= link_to "Edit Room", edit_room_path, class: "btn btn-default" %>
 </p>
 
-<% if flash[:notice] %>
-<div class="alert alert-success" <%= flash[:notice] %> role="alert"><%= flash[:notice] %></div>
-<% end %>
+<%= render "layouts/flash" %>
 
 <table class="table table-hover posts-table">
   <tr>

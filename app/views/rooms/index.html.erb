@@ -9,6 +9,8 @@
     <%= link_to "Create Room", new_room_path, class: "btn btn-default" %>
 </p>
 
+<%= render "layouts/flash" %>
+
 <% @rooms.each do |room| %>
 <tr>
   <td><%= link_to room.name, room %></td>
