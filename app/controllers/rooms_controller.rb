@@ -23,6 +23,21 @@ class RoomsController < ApplicationController
     authorize @room
   end
 
+  def update
+    @room = Room.find(params[:id])
+    authorize @room
+
+    @room.update approved_params
+
+    if @room.save
+      flash[:notice] = "Room successfully created."
+      redirect_to rooms_path
+    else
+      flash[:notice] =  @room.errors.full_messages
+      render :new
+    end
+  end
+
   def create
     @room = Room.new(
       approved_params.merge({ user_id: current_user.id})
