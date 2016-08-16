@@ -30,10 +30,10 @@ class RoomsController < ApplicationController
     @room.update approved_params
 
     if @room.save
-      flash[:notice] = "Room successfully created."
+      flash[:success] = "Room successfully created."
       redirect_to rooms_path
     else
-      flash[:notice] =  @room.errors.full_messages
+      flash.now[:warning] =  @room.errors.full_messages
       render :new
     end
   end
@@ -43,10 +43,10 @@ class RoomsController < ApplicationController
       approved_params.merge({ user_id: current_user.id})
     )
     if @room.save
-      flash[:notice] = "Room successfully created."
+      flash[:success] = "Room successfully created."
       redirect_to rooms_path
     else
-      flash[:notice] =  @room.errors.full_messages
+      flash.now[:warning] =  @room.errors.full_messages
       render :new
     end
   end
@@ -55,10 +55,10 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
     authorize @room
     if @room.destroy
-      flash[:notice] = "#{@room.name} is no longer..."
+      flash[:success] = "#{@room.name} is no longer..."
       redirect_to rooms_path
     else
-      flash[:notice] =  @room.errors.full_messages
+      flash[:warning] =  @room.errors.full_messages
       redirect_to rooms_path
     end
   end

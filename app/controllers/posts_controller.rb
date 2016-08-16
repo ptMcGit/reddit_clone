@@ -28,7 +28,7 @@ class PostsController < ApplicationController
     authorize @post
 
     if @post.save
-      flash[:notice] = "successful post"
+      flash[:success] = "successful post"
       redirect_to @room
     else
       render :new
@@ -41,7 +41,7 @@ class PostsController < ApplicationController
     authorize @post
     @post.update(approved_params)
 
-    flash[:notice] = "successfully updated."
+    flash[:success] = "successfully updated."
 
     redirect_to room_path(@post.room)
   end
@@ -50,7 +50,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     authorize @post
     @post.destroy
-    flash[:notice] = "Post succesfully deleted."
+    flash[:success] = "Post succesfully deleted."
     redirect_to room_path(params[:room_id])
   end
 
