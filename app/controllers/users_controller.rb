@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  skip_after_action :verify_authorized, only: [:new]
+  skip_after_action :verify_authorized, only: [:new, :show]
 
   def index
     @users = User.all
@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find(params[:id])
   end
 
   def update

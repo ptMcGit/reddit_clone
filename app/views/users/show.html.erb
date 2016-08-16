@@ -1,2 +1,23 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<%= provide(:page_header, @user.email) %>
+
+<div class="row">
+  <div class="col-md-8">
+    <table class="table table-bordered">
+      <tr>
+        <td>
+          <%-# if @user.avatar -%>
+          <%#= image_tag @user.avatar.url -%>
+          <%-# else -%>
+          <%= image_tag  "no_avatar.jpeg", class: "img responsive img-rounded" %>
+          <%-# end -%>
+        </td>
+      </tr>
+      <tr>
+        <td>Member since:</td>
+        <td><%= @user.created_at %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-4">
+  </div>
+</div>
