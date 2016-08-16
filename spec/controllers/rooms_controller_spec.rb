@@ -31,6 +31,19 @@ RSpec.describe RoomsController, type: :controller do
       to change { Room.count }.by 1
   end
 
+  it "can update a room" do
+    r1 = room
+    r2 = attributes_for(:room)
+
+    sign_in r1.user
+    patch :update, id: r1.id, room: {**(r2)}
+
+    expect(
+      (r2.stringify_keys.to_a - r1.reload.attributes.to_a).empty?
+    ).to be_truthy
+  end
+
+
   it "can destroy a room" do
     r = room
     sign_in r.user
