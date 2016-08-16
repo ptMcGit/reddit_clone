@@ -1,28 +1,6 @@
-== README
+# Reddit Clone #
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app is an attempt at a social networking platform.
+The goal is to implement many of the more recognizable features of sites, with some new twists.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+See the app at <https://reddit-clone456.herokuapp.com>
