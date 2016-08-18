@@ -6,6 +6,7 @@ describe "SignUp", type: :feature do
     expect {
       visit "/"
       click_on "Sign Up"
+      fill_in "user[username]", with: "testuser"
       fill_in "user[email]", with: "test@example.com"
       fill_in "user[password]", with: "password"
       fill_in "user[password_confirmation]", with: "password"

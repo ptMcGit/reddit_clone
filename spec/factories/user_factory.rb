@@ -9,8 +9,9 @@ FactoryGirl.define do
   end
 
   factory :user do
-    email { Faker::Internet.safe_email }
-    password "password"
+    username    { Faker::Internet.user_name }
+    email       { Faker::Internet.safe_email }
+    password    "password"
 
     factory :user_who_is_admin do
       after(:create) do |user, evaluator|
