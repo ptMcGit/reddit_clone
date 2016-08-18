@@ -5,8 +5,10 @@
   <td>started</td>
 </tr>
 
-  <p class="text-left">
-    <%= link_to "Create Room", new_room_path, class: "btn btn-default" %>
+<p class="text-left">
+  <% if current_user %>
+  <%= link_to "Create Room", new_room_path, class: "btn btn-default" %>
+  <% end %>
 </p>
 
 <%= render "layouts/flash" %>
