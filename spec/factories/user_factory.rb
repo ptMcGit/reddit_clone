@@ -23,5 +23,20 @@ FactoryGirl.define do
         create_list(:moderator, 1, user: user, room: create(:room))
       end
     end
+    factory :user_with_post do
+      after(:create) do |user, evaluator|
+        create_list(:post, 1, user: user, room: Room.all.sample)
+      end
+    end
+    factory :user_with_comments do
+      after(:create) do |user, evaluator|
+        create_list(:comment, 10, user: user, post: Post.all.sample)
+      end
+    end
+    factory :user_with_votes do
+      after(:create) do |user, evaluator|
+        create_list(:vote, 10, user: user, post: Post.all.sample)
+      end
+    end
   end
 end
