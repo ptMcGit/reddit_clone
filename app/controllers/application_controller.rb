@@ -14,8 +14,9 @@ class ApplicationController < ActionController::Base
   after_action :verify_authorized, unless: :devise_controller?
 
   rescue_from Pundit::NotAuthorizedError, :with => :not_authorized
+  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
 
-protected
+  protected
 
   def set_carousel
     @carousel = Room.all.first(5)
@@ -30,9 +31,11 @@ protected
     end
   end
 
-private
-
   def not_authorized
+    redirect_to '/404'
+  end
+
+  def not_found
     redirect_to '/404'
   end
 end
