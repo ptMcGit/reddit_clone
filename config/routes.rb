@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :posts, concerns: :voteable
   end
 
-
+  # if no route matches
+  match ":url", to: redirect('/404'), via: :all
 
 end
