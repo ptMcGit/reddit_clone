@@ -1,7 +1,8 @@
 def create_moderator_user room_name
   User.create!(
-    email: room_name.sub(/([^ ]+)([ ]+)([^ ]+)([ ]|$)/, '\1@\3').downcase,
-    password: "password"
+    username:   room_name.sub(/([^ ]+)([ ]+)([^ ]+)([ ]|$)/, '\1admin').downcase,
+    email:      room_name.sub(/([^ ]+)([ ]+)([^ ]+)([ ]|$)/, '\1@\3').downcase,
+    password:   "password"
   )
 end
 
@@ -33,7 +34,6 @@ end
   Room.create!(
     name: room[:name],
     description: room[:description],
-    created_at: Time.now,
     user_id: mod.id
   )
 end
