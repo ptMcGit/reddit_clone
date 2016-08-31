@@ -59,7 +59,7 @@ class RoomsController < ApplicationController
       redirect_to rooms_path
     else
       flash[:warning] =  @room.errors.full_messages
-      redirect_to rooms_path
+      not_authorized
     end
   end
 
