@@ -1,10 +1,9 @@
-<%= provide(:page_header, @user.email) %>
-
+<h2><%= @user.username %></h2>
 <div class="row">
   <div class="col-md-8">
     <table class="table table-bordered">
       <tr>
-        <td>
+        <td colspan="2">
           <%-# if @user.avatar -%>
           <%#= image_tag @user.avatar.url -%>
           <%-# else -%>
@@ -14,7 +13,7 @@
       </tr>
       <tr>
         <td>Member since:</td>
-        <td><%= @user.created_at %></td>
+        <td><%= @user.created_at.to_formatted_s(:month_and_year) %></td>
       </tr>
     </table>
   </div>
