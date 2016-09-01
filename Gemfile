@@ -4,8 +4,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
-gem 'pg'
-
 gem 'devise'
 gem 'pundit'
 
@@ -38,6 +36,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+group :production do
+  gem 'puma'
+  gem 'pg'
+  gem 'rack-timeout'
+end
+
+
 
 group :development do
     # Access an IRB console on exception pages or by using <%= console %> in views
