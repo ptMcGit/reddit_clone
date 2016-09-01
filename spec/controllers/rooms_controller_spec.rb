@@ -14,7 +14,7 @@ RSpec.describe RoomsController, type: :controller do
     r = room
     sign_in u
 
-    get :show, id: 1
+    get :show, id: r.id
     expect(response.status).to eq(200)
   end
 
