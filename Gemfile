@@ -7,6 +7,8 @@ gem 'rails', '4.2.6'
 gem 'devise'
 gem 'pundit'
 
+gem 'rack-timeout'
+
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap_form'
 
@@ -40,7 +42,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :production do
   gem 'puma'
   gem 'pg'
-  gem 'rack-timeout'
 end
 
 
