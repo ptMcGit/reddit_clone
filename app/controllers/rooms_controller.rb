@@ -4,7 +4,7 @@ class RoomsController < ApplicationController
   skip_after_action :verify_authorized, only: [:index, :show, :new, :create]
 
   def index
-    @rooms = Room.all
+    @rooms = Room.order(:name).page params[:page]
   end
 
   def show

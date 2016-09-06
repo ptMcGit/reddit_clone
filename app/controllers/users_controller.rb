@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   skip_after_action :verify_authorized, only: [:new, :show]
 
   def index
-    @users = User.all
+    @users = User.order(:username).page params[:page]
     authorize @users
   end
 

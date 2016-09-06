@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   after_action :verify_authorized
 
   def index
-    @posts = Post.all
+    @posts = Post.order(:updated_at).page params[:page]
     authorize @posts
   end
 
