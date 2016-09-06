@@ -10,14 +10,30 @@ var styleAsDownvote = function(target) {
 }
 
 var updateStaticValue = function (target, vote_value) {
-    var value = $(target.parent().closest("tr").find('td')[0])
+
+    var current_vote_value = target.parent().data("static-vote-value")
+    var value_field = $(target.parent().closest("tr").find('td')[0])
+    var value = Number( value_field.text() )
+
+
+    // subtract out the user's previous vote if there
+    value -= (current_vote_value == 0) ? 0: current_vote_value;
+
+    // update the user's vote value
+    target.parent().data("static-vote-value", vote_value)
     var index = target.parent().data("post-value")
-    value.text(staticValues[index] + vote_value)
+
+    // update the sum
+    value_field.text(value + vote_value)
 }
 
 var serverVoteRequest = function(vote_object, success_function) {
     var current_post = vote_object.parent().data("post-value")
     var vote_value = vote_object.data("vote-value")
+    var current_vote_value = vote_object.parent().data("static-vote-value")
+
+    console.log(current_vote_value, vote_value)
+    if (current_vote_value == vote_value) { return }
 
     $.ajax({
         url:        "/posts/" + current_post + "/votes.json",
