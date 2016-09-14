@@ -1,24 +1,10 @@
 class UsersController < ApplicationController
 
-  skip_after_action :verify_authorized, only: [:new, :show]
+  after_action :verify_authorized
 
   def index
     @users = User.order(:username).page params[:page]
     authorize @users
-  end
-
-  def create
-    user = User.create approved_params
-    if user.save
-      redirect_to rooms_path
-    end
-  end
-
-  def new
-    @user = User.new
-  end
-
-  def edit
   end
 
   def show
@@ -26,17 +12,9 @@ class UsersController < ApplicationController
     authorize @user
   end
 
-  def update
-  end
-
   def destroy
+    @user = User.find(params[:id])
+    authorize @user
   end
 
-  def approved_params
-    params.require(:user).permit(
-      :name,
-      :email,
-      :password
-    )
-  end
 end
