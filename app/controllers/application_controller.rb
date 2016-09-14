@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_authorized
-    redirect_to '/404'
+    not_found
   end
 
   def not_found
