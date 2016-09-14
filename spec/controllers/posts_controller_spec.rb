@@ -82,10 +82,8 @@ describe PostsController, type: :controller do
     end
 
     it "renders the index template" do
-      new_post
-      sign_in @a
+      2.times { new_post }
       get 'index'
-      expect(assigns(:posts).last).to eq(Post.last)
       expect(assigns(:posts).count).to eq(Post.count)
       expect(response).to render_template(:index)
     end
