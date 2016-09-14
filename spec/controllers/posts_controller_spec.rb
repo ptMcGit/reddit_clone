@@ -2,144 +2,110 @@ require 'rails_helper'
 
 describe PostsController, type: :controller do
 
-  let(:user) { create :user }
-  let(:admin) { create :user_who_is_admin }
-  let(:room_post) { create :post }
-  let(:room) { create :room }
+  before(:all) do
+    @u      = create(:user)
+    @r      = create(:room)
+    @u2     = create(:user)
+    @a      = create(:user_who_is_admin)
+  end
+
+  let(:new_post) {
+    create(
+      :post,
+      user_id: @u.id,
+      room_id: @r.id,
+    )
+  }
 
   describe "administrators" do
-    it "can delete other user's posts" do
-      p = room_post
-      a = admin
-      sign_in a
-
-      expect {
-        post 'destroy', {id: p.id, room_id: p.room_id}
-      }.
-        to change { Post.count }.by -1
+    before(:each) do
+      sign_in @a
     end
 
-    it "are the only ones who see the index" do
-      bypass_rescue
-
-      a = admin
-      sign_in a
-
+    it "renders the index template" do
+      sign_in @a
       get 'index'
-      expect(response.status).to eq(200)
-      sign_out a
-
-      u = user
-      sign_in u
-      expect {
-        get 'index'
-        }.
-        to raise_error(Pundit::NotAuthorizedError)
+      expect(assigns(:posts).last).to eq(Post.last)
+      expect(assigns(:posts).count).to eq(Post.count)
+      expect(response).to render_template(:index)
     end
+
+    it "can destroy others' posts" do
+      p = new_post
+
+      post 'destroy', {
+             id: p.id,
+            room_id: p.room_id
+          }
+     expect(assigns(:post)).to eq(p)
+     expect(Post.find_by(id: p.id)).to be_falsy
+    end
+
   end
 
   describe "regular users" do
-    def log_in_user
-      u = user
-      sign_in u
-    end
 
     before(:each) do
-      log_in_user
+      sign_in @u
+      @p = new_post
     end
 
     it "renders the show template" do
-      p = room_post
-
-      get 'show', id: p.id
+      get 'show', id: @p.id
+      expect(assigns(:post)).to eq(@p)
       expect(response).to render_template(:show)
-      expect(response.status).to eq(200)
     end
 
-    it "allows creation of a new post" do
-      r = room
-
-      new_room_post_path(r.id)
-      expect(response.status).to eq(200)
-      #expect(assigns(:post)).to be_a_new(Post)
+    it "renders the new view" do
+      get 'new', room_id: @r.id
+      expect(assigns(:post)).to be_a_new(Post).with(:room_id => @r.id)
+      expect(response).to render_template(:new)
     end
 
     it "renders the edit view" do
-      p = room_post
-      sign_in p.user
-      get 'edit', id: p.id
+      get 'edit', id: @p.id
       expect(response).to render_template(:edit)
-      expect(response.status). to eq(200)
+      expect(assigns(:post)).to eq(@p)
     end
 
     it "can create posts" do
-      r = room
-      u = user
-      sign_in u
       expect {
         post 'create', {
-               room_id: r.id,
-               user_id: u.id,
-               title: "title",
-               content: "content"
+               room_id: @r.id,
+               user_id: @u.id,
+               **(attributes_for(:post))
              }
       }.
         to change { Post.count }.by 1
-
-
     end
 
     it "allows a user to update a post" do
-      p = create :post, {updated_at: 1.day.ago}
+      old_attr = @p.attributes
 
-      sign_in p.user
+      post 'update', {
+               id: @p.id,
+               user_id: @p.user_id,
+               **(attributes_for(:post))
+           }
 
-      post 'update', {id: p.id, content: "content update", user_id: p.user_id, title: "title update"}
-      p_new = Post.find(p.id)
-      expect p_new.updated_at == p.updated_at
+      expect(assigns(:post)).to eq(@p)
+      expect(@p.reload.attributes).to_not eq(old_attr)
     end
 
-    it "allows a user to destroy a post" do
-      p = create :post
+   it "allows a user to destroy a post" do
+     post 'destroy', {
+            id: @p.id,
+            room_id: @p.room_id
+          }
 
-      sign_in p.user
-
-      expect {
-        post 'destroy', {id: p.id, room_id: p.room_id}
-      }.
-        to change { Post.count }.by -1
-    end
-  end
-
-  describe "other users" do
-    it "cannot delete a post that doesn't belong to them" do
-      bypass_rescue
-      p = room_post
-      other_u = user
-      sign_in other_u
-       expect {
-        post 'destroy', {id: p.id, room_id: p.room_id}
-      }.
-        to raise_error(Pundit::NotAuthorizedError)
-    end
-
-    it "cannot edit a post that doesn't belong to them" do
-      bypass_rescue
-      p = create :post, {updated_at: 1.day.ago}
-      u = user
-      sign_in u
-
-      expect {
-       post 'update', {id: p.id, content: "content update", user_id: p.user_id, title: "title update"}
-      }.
-       to raise_error(Pundit::NotAuthorizedError)
-
-      p_new = Post.find(p.id)
-      expect p_new.updated_at != p.updated_at
+     expect(assigns(:post)).to eq(@p)
+     expect(Post.find_by(id: @p.id)).to be_falsy
     end
   end
 
   describe "moderators" do
-    it "can delete posts in rooms it moderates."
+    "can delete posts in rooms it moderates."
+    "can view all posts for rooms it moderates."
   end
+
 end
