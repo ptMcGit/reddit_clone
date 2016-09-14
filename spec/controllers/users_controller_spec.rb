@@ -34,7 +34,7 @@ describe UsersController, type: :controller do
     end
 
     it "renders the index template" do
-      user
+      2.times { user }
       get :index
       expect(assigns(:users).count).to eq(User.count)
       expect(response).to render_template(:index)
@@ -43,11 +43,11 @@ describe UsersController, type: :controller do
     it "can destroy other users" do
       u = user
 
-      post 'destroy', {
+      post :destroy, {
              id: u.id,
            }
       expect(assigns(:user)).to eq(u)
-      expect(Post.find_by(id: u.id)).to be_falsy
+      expect(User.find_by(id: u.id)).to be_falsy
     end
 
   end
