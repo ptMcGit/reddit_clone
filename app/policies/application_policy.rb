@@ -1,8 +1,10 @@
 class ApplicationPolicy
+
+  include PunditHelper
+
   attr_reader :user, :record
 
   def initialize(user, record)
-    raise Pundit::NotAuthorizedError, "must be logged in" unless user
     @user = user
     @record = record
   end
@@ -35,9 +37,8 @@ class ApplicationPolicy
     false
   end
 
-
   def scope
-    Pundit.policy_scope!(user, record.class)
+    Pundit.policy_scope!(user, record.klass)
   end
 
   class Scope
@@ -52,16 +53,5 @@ class ApplicationPolicy
       scope
     end
   end
-
-  def is_owner?
-    @user == @record.user
-  end
-
-  def is_admin?
-    Admin.find_by(user_id: @user.id)
-  end
-
-
-
 
 end

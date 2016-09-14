@@ -37,10 +37,4 @@ class PostPolicy < ApplicationPolicy
     )
   end
 
-  private
-
-  def is_moderator?
-    Moderator.where(room_id: @record.room_id).pluck(:user_id).include? @user.id
-  end
-
 end
