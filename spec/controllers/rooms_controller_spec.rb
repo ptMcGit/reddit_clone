@@ -1,73 +1,94 @@
 require 'rails_helper'
-#include Devise::TestHelpers
 
 RSpec.describe RoomsController, type: :controller do
-  let(:user) { create(:user, password: "password") }
-  let(:room) { create :room }
-  it "renders the index template" do
-    get :index
-    expect(response.status).to eq(200)
+
+  before(:all) do
+    @u      = create(:user)
+    @a      = create(:user_who_is_admin)
   end
 
-  it "renders the show template" do
-    u = user
-    r = room
-    sign_in u
+  let(:room) {
+    create(
+      :room,
+      user_id: @u.id
+    )
+  }
 
-    get :show, id: r.id
-    expect(response.status).to eq(200)
-  end
+  describe "regular users" do
+    before(:each) do
+      sign_in @u
+    end
 
-  it "can create a room" do
-    u = user
-    sign_in u
+    it "renders the index template" do
+      get :index
+      expect(response).to render_template(:index)
+    end
 
-    expect {
-      post :create, {
-             room: {name: "test room",
-                    description: "test room description"}
+    it "renders the show template" do
+      r = room
+      get :show, id: r.id
+      expect(assigns(:room)).to eq(r)
+      expect(response).to render_template(:show)
+    end
+
+    it "renders the new template" do
+      get :new
+      expect(assigns(:room)).to be_a_new(Room)
+      expect(response).to render_template(:new)
+    end
+
+    it "can create a room" do
+      expect {
+        post :create, {
+               room: {
+                 **(attributes_for(:room))
+               }
+             }
+      }.
+        to change { Room.count }.by 1
+    end
+
+    it "can update a room" do
+      r = room
+      old_attr = r.attributes
+
+      post :update, {:id => r.id, :room => {
+             **(attributes_for(:room))
+           }}
+
+      expect(assigns(:room)).to eq(r)
+      expect(r.reload.attributes).to_not eq(old_attr)
+    end
+
+    it "can destroy a room" do
+      r = room
+
+      post :destroy, {
+             :id => r.id
            }
-    }.
-      to change { Room.count }.by 1
+      expect(assigns(:room)).to eq(r)
+      expect(Room.find_by(id: r.id)).to be_falsy
+    end
   end
 
-  it "can update a room" do
-    r1 = room
-    r2 = attributes_for(:room)
+  describe "administrators" do
+    before(:each) do
+      sign_in @a
+    end
 
-    sign_in r1.user
-    patch :update, id: r1.id, room: {**(r2)}
+    it "can destroy rooms owned by others" do
+      r = room
 
-    expect(
-      (r2.stringify_keys.to_a - r1.reload.attributes.to_a).empty?
-    ).to be_truthy
+      post :destroy, {
+             id: r.id
+           }
+
+      expect(assigns(:room)).to eq(r)
+      expect(Room.find_by(id: r.id)).to be_falsy
+    end
   end
 
-
-  it "can destroy a room" do
-    r = room
-    sign_in r.user
-
-    expect {
-    post :destroy, {
-           id: r.id
-         }
-    }.
-      to change { Room.count }.by -1
-  end
-
-  it "cannot destroy rooms it does not own" do
-    r = room
-    u = user
-
-    sign_in u
-
-    expect {
-    post :destroy, {
-           id: r.id
-         }
-    }.
-      to change { Room.count }.by 0
-    expect(response).to redirect_to("/404")
+  describe "moderators" do
+    "can quit as moderator"
   end
 end

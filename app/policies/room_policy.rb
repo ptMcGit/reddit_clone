@@ -5,27 +5,32 @@ class RoomPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    user
   end
 
   def new?
-    true
+    user
   end
 
   def edit?
-    is_owner?
+    user &&
+      is_owner?
   end
 
   def create?
-    true
+    user
   end
 
   def update?
-    is_owner?
+    user &&
+      is_owner?
   end
 
   def destroy?
-    is_owner? ||
+    user && (
+      is_owner? ||
       is_admin?
+    )
   end
+
 end
