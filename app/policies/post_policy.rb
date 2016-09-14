@@ -2,7 +2,6 @@ class PostPolicy < ApplicationPolicy
   def index?
     user &&
       is_admin?
-    scope.all
   end
 
   def show?
