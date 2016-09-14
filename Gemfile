@@ -53,7 +53,8 @@ group :development do
 end
 
 group :test do
-  gem 'simplecov'
+  gem 'database_cleaner'
+  gem 'pundit-matchers', '~> 1.1.0'
 end
 
 group :development, :test do

@@ -11,6 +11,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
 require 'devise'
+require 'pundit/rspec'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
@@ -23,12 +24,15 @@ RSpec.configure do |config|
 
   config.filter_rails_from_backtrace!
 
-  config.include Devise::TestHelpers, :type => :controller
 
+  config.include Devise::Test::ControllerHelpers, :type => :controller
   #config.before :each, type: :controller do
     #@request.env["devise.mapping"] = Devise.mappings[:user]
     #@request.env["devise.mapping"] = Devise.mappings[:admin]
     #binding.pry
   #end
   config.include FactoryGirl::Syntax::Methods
+
+  # require everything in spec/support
+  Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 end
