@@ -1,19 +1,20 @@
 class UserPolicy < ApplicationPolicy
 
   def index?
-    is_admin?
+    user &&
+      is_admin?
   end
 
   def show?
-    if @record.deactivated
-      return is_admin?
-    end
-    true
+    user &&
+      true
   end
 
-  class Scope < Scope
-    def resolve
-      scope
-    end
+  def destroy?
+    # owner must go through devise
+    user && (
+        is_admin?
+    )
   end
+
 end
