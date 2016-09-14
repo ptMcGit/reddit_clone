@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = @room.posts.new
+    @post = @room.posts.new(user_id: current_user.id)
     authorize @post
   end
 

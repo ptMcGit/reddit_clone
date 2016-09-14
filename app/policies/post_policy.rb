@@ -1,5 +1,4 @@
 class PostPolicy < ApplicationPolicy
-
   def index?
     is_admin?
   end
@@ -9,7 +8,7 @@ class PostPolicy < ApplicationPolicy
   end
 
   def new?
-    true
+    is_owner?
   end
 
   def edit?
