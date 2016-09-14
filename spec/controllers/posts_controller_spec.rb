@@ -5,7 +5,6 @@ describe PostsController, type: :controller do
   before(:all) do
     @u      = create(:user)
     @r      = create(:room)
-    @u2     = create(:user)
     @a      = create(:user_who_is_admin)
   end
 
@@ -16,32 +15,6 @@ describe PostsController, type: :controller do
       room_id: @r.id,
     )
   }
-
-  describe "administrators" do
-    before(:each) do
-      sign_in @a
-    end
-
-    it "renders the index template" do
-      sign_in @a
-      get 'index'
-      expect(assigns(:posts).last).to eq(Post.last)
-      expect(assigns(:posts).count).to eq(Post.count)
-      expect(response).to render_template(:index)
-    end
-
-    it "can destroy others' posts" do
-      p = new_post
-
-      post 'destroy', {
-             id: p.id,
-            room_id: p.room_id
-          }
-     expect(assigns(:post)).to eq(p)
-     expect(Post.find_by(id: p.id)).to be_falsy
-    end
-
-  end
 
   describe "regular users" do
 
@@ -101,6 +74,33 @@ describe PostsController, type: :controller do
      expect(assigns(:post)).to eq(@p)
      expect(Post.find_by(id: @p.id)).to be_falsy
     end
+  end
+
+  describe "administrators" do
+    before(:each) do
+      sign_in @a
+    end
+
+    it "renders the index template" do
+      new_post
+      sign_in @a
+      get 'index'
+      expect(assigns(:posts).last).to eq(Post.last)
+      expect(assigns(:posts).count).to eq(Post.count)
+      expect(response).to render_template(:index)
+    end
+
+    it "can destroy others' posts" do
+      p = new_post
+
+      post 'destroy', {
+             id: p.id,
+            room_id: p.room_id
+          }
+     expect(assigns(:post)).to eq(p)
+     expect(Post.find_by(id: p.id)).to be_falsy
+    end
+
   end
 
   describe "moderators" do

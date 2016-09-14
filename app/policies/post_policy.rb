@@ -1,32 +1,40 @@
 class PostPolicy < ApplicationPolicy
   def index?
-    is_admin?
+    user &&
+      is_admin?
+    scope.all
   end
 
   def show?
-    true
+    user
   end
 
   def new?
-    is_owner?
+    user &&
+      is_owner?
   end
 
   def edit?
-    is_owner?
+    user &&
+      is_owner?
   end
 
   def create?
-    is_owner?
+    user &&
+      is_owner?
   end
 
   def update?
-    is_owner?
+    user &&
+      is_owner?
   end
 
   def destroy?
-    is_moderator? ||
+    user && (
+      is_moderator? ||
       is_owner? ||
       is_admin?
+    )
   end
 
   private
@@ -34,6 +42,5 @@ class PostPolicy < ApplicationPolicy
   def is_moderator?
     Moderator.where(room_id: @record.room_id).pluck(:user_id).include? @user.id
   end
-
 
 end

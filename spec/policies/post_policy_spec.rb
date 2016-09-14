@@ -21,13 +21,13 @@ RSpec.describe PostPolicy do
   context 'being a visitor' do
     let(:user) { nil }
 
-    xit { is_expected.to forbid_action(:index) }
-    xit { is_expected.to forbid_action(:show) }
-    xit { is_expected.to forbid_action(:new) }
-    xit { is_expected.to forbid_action(:edit) }
-    xit { is_expected.to forbid_action(:create) }
-    xit { is_expected.to forbid_action(:update) }
-    xit { is_expected.to forbid_action(:destroy) }
+    it { is_expected.to forbid_action(:index) }
+    it { is_expected.to forbid_action(:show) }
+    it { is_expected.to forbid_action(:new) }
+    it { is_expected.to forbid_action(:edit) }
+    it { is_expected.to forbid_action(:create) }
+    it { is_expected.to forbid_action(:update) }
+    it { is_expected.to forbid_action(:destroy) }
   end
 
   context 'being a regular user' do
