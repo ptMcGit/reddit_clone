@@ -1,6 +1,6 @@
 class VotePolicy < ApplicationPolicy
 
-  def create?
+  def vote?
     is_owner?
   end
 

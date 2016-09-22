@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
   get "/posts" => "posts#index"
 
+
   concern :voteable do
-    resources :votes
+    post '/votes(.:format)', to: 'votes#vote'
+    #resources :votes
   end
 
   resources :users, :comments
