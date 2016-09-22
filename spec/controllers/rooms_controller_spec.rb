@@ -37,6 +37,14 @@ RSpec.describe RoomsController, type: :controller do
       expect(response).to render_template(:new)
     end
 
+    it "renders the edit template" do
+      r = room
+
+      get :edit, id: r.id
+      expect(assigns(:room)).to eq(r)
+      expect(response).to render_template(:edit)
+    end
+
     it "can create a room" do
       expect {
         post :create, {
