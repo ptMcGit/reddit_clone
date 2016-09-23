@@ -31,6 +31,7 @@ class PostsController < ApplicationController
       flash[:success] = "successful post"
       redirect_to @room
     else
+      flash.now[:warning] =  @post.errors.full_messages
       render :new
     end
 
@@ -41,9 +42,13 @@ class PostsController < ApplicationController
     authorize @post
     @post.update(approved_params)
 
-    flash[:success] = "successfully updated."
-
-    redirect_to room_path(@post.room)
+    if @post.save
+      flash[:success] = "successfully updated."
+      redirect_to room_path(@post.room)
+    else
+      flash.now[:warning] =  @post.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy
