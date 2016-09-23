@@ -1,0 +1,19 @@
+<% flash.each do |message_type, list| %>
+<div class="alert alert-<%= class_for_bootstrap(message_type) %>">
+
+  <% if list.respond_to? :each %>
+
+  <ul>
+    <% list.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+
+  <% else %>
+
+    <%= list %>
+
+  <% end %>
+
+</div>
+<% end %>

@@ -1,7 +1,8 @@
 <%= render "post_header" %>
 <h1>Edit Post</h1>
 
-<% console %>
+<%= render "shared/flash" %>
+
 <%= form_tag post_path, method: :patch do %>
 
 <div class="form-group">
