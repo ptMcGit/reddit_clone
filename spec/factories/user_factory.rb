@@ -30,7 +30,7 @@ FactoryGirl.define do
     end
     factory :user_with_comments do
       after(:create) do |user, evaluator|
-        create_list(:comment, 10, user: user, post: Post.all.sample)
+        create_list(:comment, 10, user: user, commentable: Post.all.sample)
       end
     end
     factory :user_with_votes do
