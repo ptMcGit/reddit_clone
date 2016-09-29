@@ -16,11 +16,13 @@ RSpec.describe CommentsController, type: :controller do
     request.env["HTTP_REFERER"] = root_path
     expect {
       post 'create', {comment: {
-                        user_id:             @u.id,
                         commentable_id:      @p.id,
                         commentable_type:    'Post',
                         **(attributes_for(:comment))
-                      }}
+                      },
+                      post_id: @p.id
+
+                     }
     }.
       to change { @p.reload.comments.count }.by 1
   end

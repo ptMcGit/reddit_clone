@@ -12,10 +12,12 @@ Rails.application.routes.draw do
     #resources :votes
   end
 
-  resources :users, :comments
+  resources :users
 
   resources :rooms, shallow: true  do
-    resources :posts, concerns: :voteable
+    resources :posts, concerns: :voteable do
+      resources :comments
+    end
   end
 
   # if no route matches
