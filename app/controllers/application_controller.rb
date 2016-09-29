@@ -39,6 +39,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def handle_soft_error string
+    logger.warn string
+    flash[:warning] = "Oops something went wrong! Rest assured this has been noted."
+  end
 
   def not_authorized
     not_found

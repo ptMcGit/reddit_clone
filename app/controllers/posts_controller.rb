@@ -54,8 +54,13 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     authorize @post
-    @post.destroy
-    flash[:success] = "Post successfully deleted."
+
+    if @post.destroy
+      flash[:success] = "Post successfully deleted."
+    else
+      handle_soft_error @post.errors.full_messages
+    end
+
     redirect_to room_path(params[:room_id])
   end
 

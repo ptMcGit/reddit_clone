@@ -15,9 +15,12 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     authorize @user
-    @user.destroy
-    flash[:success] = "User has been deleted."
-    redirect_to (request.env['HTTP_REFERER'] || root_path)
+    if @user.destroy
+      flash[:success] = "User has been deleted."
+    else
+      handle_soft_error @user.errors.full_messages
+    end
+    redirect_back
   end
 
 end

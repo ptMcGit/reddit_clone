@@ -39,8 +39,12 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     authorize @comment
-    @comment.destroy
-    flash[:success] = "Comment successfully deleted."
+
+    if @comment.destroy
+      flash[:success] = "Comment successfully deleted."
+    else
+      handle_soft_error @comment.errors.full_messages
+    end
 
     redirect_back
 
