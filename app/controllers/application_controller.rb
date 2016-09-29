@@ -31,6 +31,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def redirect_back
+    if request.env["HTTP_REFERER"]
+      redirect_to(:back)
+    else
+      not_found
+    end
+  end
+
+
   def not_authorized
     not_found
   end

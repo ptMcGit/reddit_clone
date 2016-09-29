@@ -17,11 +17,8 @@ class CommentsController < ApplicationController
       flash[:warning] =  @comment.errors.full_messages
     end
 
-    if request.env["HTTP_REFERER"]
-      redirect_to(:back)
-    else
-      not_found
-    end
+    redirect_back
+
   end
 
   def update
@@ -35,11 +32,17 @@ class CommentsController < ApplicationController
       flash[:warning] =  @post.errors.full_messages
     end
 
-    if request.env["HTTP_REFERER"]
-      redirect_to(:back)
-    else
-      not_found
-    end
+    redirect_back
+
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    authorize @comment
+    @comment.destroy
+    flash[:success] = "Comment successfully deleted."
+
+    redirect_back
 
   end
 

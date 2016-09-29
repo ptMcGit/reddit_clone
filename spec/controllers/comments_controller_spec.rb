@@ -59,7 +59,7 @@ RSpec.describe CommentsController, type: :controller do
 
     it "can update comment" do
       c = comment_on_post
-      binding.pry
+
       old_attr = c.attributes
 
       post 'update', {comment: {
@@ -73,6 +73,12 @@ RSpec.describe CommentsController, type: :controller do
       expect(c.reload.attributes).to_not eq(old_attr)
     end
 
+    it "can destroy comment" do
+      c = comment_on_post
+
+      post 'destroy', id: c.id
+
+    end
   end
 
 end

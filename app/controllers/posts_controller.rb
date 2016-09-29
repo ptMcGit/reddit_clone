@@ -55,7 +55,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     authorize @post
     @post.destroy
-    flash[:success] = "Post succesfully deleted."
+    flash[:success] = "Post successfully deleted."
     redirect_to room_path(params[:room_id])
   end
 

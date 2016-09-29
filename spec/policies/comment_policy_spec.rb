@@ -25,6 +25,7 @@ RSpec.describe CommentPolicy do
 
     it { is_expected.to forbid_action(:create) }
     it { is_expected.to forbid_action(:update) }
+    it { is_expected.to forbid_action(:destroy) }
 
   end
 
@@ -34,6 +35,7 @@ RSpec.describe CommentPolicy do
 
     it { is_expected.to permit_action(:create) }
     it { is_expected.to permit_action(:update) }
+    it { is_expected.to permit_action(:destroy) }
 
   end
 
@@ -42,6 +44,7 @@ RSpec.describe CommentPolicy do
 
     it { is_expected.to forbid_action(:create) }
     it { is_expected.to forbid_action(:update) }
+    it { is_expected.to forbid_action(:destroy) }
 
   end
 
@@ -50,6 +53,7 @@ RSpec.describe CommentPolicy do
 
     it { is_expected.to forbid_action(:create) }
     it { is_expected.to forbid_action(:update) }
+    it { is_expected.to permit_action(:destroy) }
 
   end
 

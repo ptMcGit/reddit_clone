@@ -10,4 +10,8 @@ class CommentPolicy < ApplicationPolicy
       is_owner?
   end
 
+  def destroy?
+    user &&
+      (is_owner? || is_admin?)
+  end
 end
