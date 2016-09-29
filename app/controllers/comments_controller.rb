@@ -14,10 +14,10 @@ class CommentsController < ApplicationController
     if @comment.save
       flash[:success] = "comment added"
     else
-      flash.now[:warning] =  @post.errors.full_messages
+      flash[:warning] =  @comment.errors.full_messages
     end
 
-    if ENV["HTTP_REFERER"]
+    if request.env["HTTP_REFERER"]
       redirect_to(:back)
     else
       not_found
