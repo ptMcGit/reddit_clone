@@ -5,4 +5,9 @@ class CommentPolicy < ApplicationPolicy
       is_owner?
   end
 
+  def update?
+    user &&
+      is_owner?
+  end
+
 end

@@ -24,6 +24,24 @@ class CommentsController < ApplicationController
     end
   end
 
+  def update
+    @comment = Comment.find(params[:id])
+    authorize @comment
+    @comment.update(comment_params)
+
+    if @comment.save
+      flash[:success] = "successfully updated."
+    else
+      flash[:warning] =  @post.errors.full_messages
+    end
+
+    if request.env["HTTP_REFERER"]
+      redirect_to(:back)
+    else
+      not_found
+    end
+
+  end
 
   private
 

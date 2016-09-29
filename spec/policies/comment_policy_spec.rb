@@ -24,6 +24,7 @@ RSpec.describe CommentPolicy do
     let(:user) { nil }
 
     it { is_expected.to forbid_action(:create) }
+    it { is_expected.to forbid_action(:update) }
 
   end
 
@@ -32,6 +33,7 @@ RSpec.describe CommentPolicy do
     let(:user) { @u }
 
     it { is_expected.to permit_action(:create) }
+    it { is_expected.to permit_action(:update) }
 
   end
 
@@ -39,6 +41,7 @@ RSpec.describe CommentPolicy do
     let(:user) { @u2 }
 
     it { is_expected.to forbid_action(:create) }
+    it { is_expected.to forbid_action(:update) }
 
   end
 
@@ -46,6 +49,7 @@ RSpec.describe CommentPolicy do
     let(:user) { @a }
 
     it { is_expected.to forbid_action(:create) }
+    it { is_expected.to forbid_action(:update) }
 
   end
 
