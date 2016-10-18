@@ -59,10 +59,30 @@ describe "RegisteredUser", type: :feature do
 
     end
 
-    it "can edit post"
+    it "can edit post" do
+      @p = new_post
+      @p2 = attributes_for(:post)
+      visit room_path(@r.id)
+      has_link?(@p.title)
 
+      click_on(@p.title)
+      expect(current_path).to eq( post_path(@p.id) )
 
-    it "cannot edit a post more than an hour old"
+      has_link?('Edit Post')
+      click_on('Edit Post')
+      expect(current_path).to eq( edit_post_path(@p.id) )
+
+      fill_in "post_title", with:   @p2[:title]
+      fill_in "post_content", with: @p2[:content]
+      click_on "Submit"
+
+      @p.reload
+      expect(current_path).to eq( room_path(@r.id) )
+      expect(@p.title).to eq(@p2[:title])
+      expect(@p.content).to eq(@p2[:content])
+
+    end
+
     xit "can delete a post" do
       p = create(:post, title: "can delete a post test")
       visit rooms_path
