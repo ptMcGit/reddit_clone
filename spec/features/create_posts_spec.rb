@@ -3,45 +3,69 @@ require 'pry'
 
 describe "RegisteredUser", type: :feature do
 
-  let(:room) { create :room }
-  let(:user) { create :user }
-  let(:post) { create :post }
+  before(:all) do
+    @u      = create(:user)
+    @r      = create(:room)
+  end
+
+  let(:new_post) {
+    create(
+      :post,
+      user_id: @u.id,
+      room_id: @r.id
+    )
+  }
 
   def log_in
-    visit "/"
-    click_on "Log In"
-    fill_in "Email", with: user.email
-    fill_in "Password", with: user.password
-    click_on "Log in"
   end
 
-  before(:each) do
-    log_in
+  describe "logged out user" do
+
+    it "can log in" do
+      visit "/"
+      click_on "Log In"
+      fill_in "Email",    with: @u.email
+      fill_in "Password", with: @u.password
+      click_on "Log in"
+      expect(current_path).to eq(root_path)
+    end
+
   end
 
-  xit "can create post" do
-    post_title = "Test post title"
-    post_content = "Test post content"
+  describe "logged in user" do
 
-    expect {
-      visit rooms_path
-      visit room_path(room.id)
+    before(:each) do
+      login_as(@u, :scope => :user)
+    end
+
+    it "can create post" do
+      @p = attributes_for(:post)
+
+      visit room_path(@r.id)
+      has_link?('New Post')
 
       click_on "New Post"
+      expect(current_path).to eq( new_room_post_path(@r.id) )
 
-      fill_in "Title", with: post_title
-      fill_in "Content", with: post_content
+      fill_in "post_title", with:    @p[:title]
+      fill_in "post_content", with:  @p[:content]
       click_on "Submit"
-    }.
-      to change { Post.count }.by 1
+      expect(current_path).to eq(room_path(@r.id))
 
-    expect(page).to have_content post_title
-  end
+      within("#posts-table") do
+        has_link?(@p[:title])
+        has_link?(@u.username)
+      end
 
-  it "can edit a post less than an hour old"
-  it "cannot edit a post more than an hour old"
-  xit "can delete a post" do
-    p = create(:post, title: "can delete a post test")
-    visit rooms_path
+    end
+
+    it "can edit post"
+
+
+    it "cannot edit a post more than an hour old"
+    xit "can delete a post" do
+      p = create(:post, title: "can delete a post test")
+      visit rooms_path
+    end
   end
 end
