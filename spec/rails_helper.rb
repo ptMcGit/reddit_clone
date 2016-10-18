@@ -24,6 +24,7 @@ RSpec.configure do |config|
 
   config.filter_rails_from_backtrace!
 
+  config.include Warden::Test::Helpers
 
   config.include Devise::Test::ControllerHelpers, :type => :controller
   #config.before :each, type: :controller do
