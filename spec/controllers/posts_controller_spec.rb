@@ -23,19 +23,19 @@ describe PostsController, type: :controller do
       @p = new_post
     end
 
-    it "renders the show template" do
+    it "see the show template" do
       get 'show', id: @p.id
       expect(assigns(:post)).to eq(@p)
       expect(response).to render_template(:show)
     end
 
-    it "renders the new view" do
+    it "see the new view" do
       get 'new', room_id: @r.id
       expect(assigns(:post)).to be_a_new(Post).with(:room_id => @r.id)
       expect(response).to render_template(:new)
     end
 
-    it "renders the edit view" do
+    it "see the edit view" do
       get 'edit', id: @p.id
       expect(response).to render_template(:edit)
       expect(assigns(:post)).to eq(@p)
@@ -44,28 +44,29 @@ describe PostsController, type: :controller do
     it "can create posts" do
       expect {
         post 'create', {
-               room_id: @r.id,
-               user_id: @u.id,
-               **(attributes_for(:post))
+               post: {
+                 **(attributes_for(:post))
+               },
+               room_id: @r.id
              }
       }.
         to change { Post.count }.by 1
     end
 
-    it "allows a user to update a post" do
+    it "can update a post" do
       old_attr = @p.attributes
 
       post 'update', {
-               id: @p.id,
-               user_id: @p.user_id,
+             post: {
                **(attributes_for(:post))
+             }, id: @p.id
            }
 
       expect(assigns(:post)).to eq(@p)
       expect(@p.reload.attributes).to_not eq(old_attr)
     end
 
-   it "allows a user to destroy a post" do
+   it "can destroy a post" do
      post 'destroy', {
             id: @p.id,
             room_id: @p.room_id

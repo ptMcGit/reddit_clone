@@ -71,10 +71,9 @@ class PostsController < ApplicationController
   end
 
   def approved_params
-    params.permit(
+    params.require(:post).permit(
       :title,
       :content,
-      :room_id
     )
   end
 
