@@ -9,7 +9,7 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
-    @posts = @room.posts
+    @posts = @room.posts.order(:created_at).reverse_order
     @votes = {}
     current_user.votes.map { |o| @votes[o.post_id] = o.value }
     authorize @room
@@ -73,6 +73,5 @@ class RoomsController < ApplicationController
       :description
     )
   end
-
 
 end
