@@ -62,6 +62,7 @@ describe "RegisteredUser", type: :feature do
     it "can edit post" do
       @p = new_post
       @p2 = attributes_for(:post)
+
       visit room_path(@r.id)
       has_link?(@p.title)
 
@@ -80,12 +81,22 @@ describe "RegisteredUser", type: :feature do
       expect(current_path).to eq( room_path(@r.id) )
       expect(@p.title).to eq(@p2[:title])
       expect(@p.content).to eq(@p2[:content])
-
     end
 
-    xit "can delete a post" do
-      p = create(:post, title: "can delete a post test")
-      visit rooms_path
+    it "can delete a post" do
+      @p = new_post
+
+      visit room_path(@r.id)
+      has_link?(@p.title)
+
+      click_on(@p.title)
+      expect(current_path).to eq( post_path(@p.id) )
+
+      has_link?('Delete Post')
+
+      click_on('Delete Post')
+      expect(current_path).to eq( room_path(@r.id) )
+      ! has_link?( edit_post_path(@p.id) )
     end
   end
 end
