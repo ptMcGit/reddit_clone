@@ -32,7 +32,7 @@ class RoomsController < ApplicationController
     authorize @room
     if @room.save
       flash[:success] = "Room successfully created."
-      redirect_to rooms_path
+      redirect_to room_path(@room.id)
     else
       flash.now[:warning] =  @room.errors.full_messages
       render :new
