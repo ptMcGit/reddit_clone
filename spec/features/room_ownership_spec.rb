@@ -61,6 +61,14 @@ describe "RoomOwners", type: :feature do
 
   end
 
+  it "can delete room" do
+    @r =    room
+    visit edit_room_path( @r.id )
+
+    click_on "Delete Room"
+    expect( Room.find_by(id: @r.id) ).to be_falsy
+    expect(current_path).to eq( rooms_path )
+  end
 
 
   it "can create room moderators"
