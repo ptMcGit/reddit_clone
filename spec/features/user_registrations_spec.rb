@@ -27,6 +27,39 @@ describe "Registration", type: :feature do
   end
 
   describe "registered user" do
+
+    before(:each) do
+      @u = create(:user, password: "password")
+    end
+
+    it "can log in and log out" do
+      visit "/"
+
+      click_on "Log In"
+      expect(current_path).to eq(new_user_session_path)
+
+      fill_in "Email",    with: @u.email
+      fill_in "Password", with: @u.password
+
+      click_on "Log in"
+      expect(current_path).to eq(root_path)
+
+      click_on "Sign Out"
+      expect(current_path).to eq(root_path)
+    end
+
+    xit "can cancel account" do
+      login_as(@u, :scope => :user)
+      visit "/"
+
+      click_on "Account Settings"
+      expect(current_path).to eq(edit_user_registration_path)
+
+      click_on "Cancel my account"
+
+      expect( Find_by(id: @u.id) ).to be_falsy
+      expect(current_path).to eq(root_path)
+    end
   end
 
 end

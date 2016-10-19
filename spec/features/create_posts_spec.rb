@@ -16,22 +16,6 @@ describe "RegisteredUser", type: :feature do
     )
   }
 
-  def log_in
-  end
-
-  describe "logged out user" do
-
-    it "can log in" do
-      visit "/"
-      click_on "Log In"
-      fill_in "Email",    with: @u.email
-      fill_in "Password", with: @u.password
-      click_on "Log in"
-      expect(current_path).to eq(root_path)
-    end
-
-  end
-
   describe "logged in user" do
 
     before(:each) do
