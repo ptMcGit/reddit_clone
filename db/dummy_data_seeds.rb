@@ -25,8 +25,11 @@ end
 # create posts
 require "#{seeds_dir}/post_seeds.rb"
 
-# create comments
-require "#{seeds_dir}/comment_seeds.rb"
+# create comments on posts
+require "#{seeds_dir}/comment_on_post_seeds.rb"
+
+# create comments on comments
+require "#{seeds_dir}/comment_on_comment_seeds.rb"
 
 # create user votes
 require "#{seeds_dir}/vote_seeds.rb"
