@@ -24,59 +24,46 @@
   <% end %>
 </div>
 
-
-
 <h2>Comments</h2>
 
 <div class="container-fluid">
 
-  <% if ! @comments.empty? %>
+<%
+    if ! @comments.empty?
+    c_count = 0
+    @comments.each do |comment|
+      c_count += 1
+      sc_count = 0
+      process_commentable(comment).each do |subcomment|
+      sc_count += 1
+%>
 
-  <% @comments.each do |comment| %>
+<%  1.upto(subcomment[0]) do |divc| %>
+<div class="<%= "comment-container-" + "#{divc}" %>">
+  <% end %>
 
-  <div class="row">
-    <div class="col-md-6">
-      <%= comment.content %>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-2">
-      <%= link_to comment.user.email, comment.user %>
-    </div>
+<div
+   id="<%= "data-comment-#{c_count}-#{sc_count}" %>"
+   class="<%= "subcomment-" + "#{subcomment[0]}" %>"
+   >
+  <%= subcomment[1].content %><br>
+  <%= link_to( subcomment[1].user.username, user_path( subcomment[1].user.id ) ) %>
+  <%= subcomment[1].created_at %>
+</div>
 
-    <div class="col-md-2">
-    </div>
-
-    <div class="col-md-2">
-      <%= comment.created_at.to_date %>
-    </div>
-  </div>
-
-<% if false %>
-
-<div class="row">
-    <div class="col-md-6">
-
-      <div class="form-group">
-        <%= form_tag(post_comments_path(@post.id), method: "post") do %>
-
-        <%= hidden_field(:comment, :commentable_id, value: comment.id) %>
-        <%= hidden_field(:comment, :commentable_type, value: 'Comment') %>
-        <%= label_tag(:comment, "Add a comment:") %>
-        <%= text_area(:comment, :content, rows: 3, class: "form-control") %>
-        <%= submit_tag("Submit", class: "btn btn-primary") %>
-        <% end %>
-      </div>
-
-    </div>
-  </div>
+<% subcomment[0].times do %>
+</div>
 <% end %>
 
-  <% end %>
 
-  <% else %>
-  <p>No replies yet.</p>
-  <% end %>
+<%
+      end
+    end
+%>
+
+<% else %>
+<p>No replies yet.</p>
+<% end %>
 
 </div>
