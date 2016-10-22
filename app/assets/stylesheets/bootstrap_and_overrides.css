@@ -13,14 +13,18 @@
 
 [class^=comment-container] {
     padding-left: 1em;
-    border-left: 1px solid gray;
+    border-left: 1px solid lightgray;
+}
+
+.comment-container-1 {
+    padding-left: 0em;
+    border-left: 0px solid green;
 }
 
 
 div[id^=data-comment] {
     border: 1px solid #ffffff;
     padding: 1em;
-    border-collapse: collapse;
     margin-top: -1px;
     botton-top: -1px;
     background: #eaeaea;

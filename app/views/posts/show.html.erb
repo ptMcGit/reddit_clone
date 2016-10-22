@@ -28,42 +28,32 @@
 
 <div class="container-fluid">
 
-<%
-    if ! @comments.empty?
-    c_count = 0
-    @comments.each do |comment|
-      c_count += 1
-      sc_count = 0
-      process_commentable(comment).each do |subcomment|
-      sc_count += 1
-%>
+  <% if @comments.empty? %>
 
-<%  1.upto(subcomment[0]) do |divc| %>
-<div class="<%= "comment-container-" + "#{divc}" %>">
+    <p>No replies yet.</p>
+
+  <% else
+
+       c_count = 0
+       process_commentable(@comments).each do |comment|
+         c_count += 1
+         1.upto(comment[0]) do |divc| %>
+       <div class="<%= "comment-container-" + "#{divc}" %>">
+         <% end %>
+       <div
+          id="<%= "data-comment-#{c_count}" %>"
+          class="<%= "comment-" + "#{comment[0]}" %>"
+          >
+         <p>
+           <%= link_to( comment[1].user.username ) %>
+           | <%= comment[1].created_at %>
+         </p>
+          <p><%= comment[1].content %></p>
+       </div>
+       <% comment[0].times do %>
+       </div>
+              <% end %>
+       <% end %>
   <% end %>
-
-
-<div
-   id="<%= "data-comment-#{c_count}-#{sc_count}" %>"
-   class="<%= "subcomment-" + "#{subcomment[0]}" %>"
-   >
-  <%= subcomment[1].content %><br>
-  <%= link_to( subcomment[1].user.username, user_path( subcomment[1].user.id ) ) %>
-  <%= subcomment[1].created_at %>
-</div>
-
-<% subcomment[0].times do %>
-</div>
-<% end %>
-
-
-<%
-      end
-    end
-%>
-
-<% else %>
-<p>No replies yet.</p>
-<% end %>
 
 </div>
