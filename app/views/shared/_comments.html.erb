@@ -1,0 +1,32 @@
+<%
+c_count = 0
+
+process_commentable(@comments).each do |comment|
+  c_count += 1
+  1.upto(comment[0]) do |divc|
+  %>
+
+    <div class="<%= "comment-container-" + "#{divc}" %>">
+
+  <% end %>
+
+  <div
+    id="<%= "data-comment-#{c_count}" %>"
+    class="<%= "comment-" + "#{comment[0]}" %>"
+  >
+
+  <p>
+    <%= link_to( comment[1].user.username ) %> |
+    <%= comment[1].created_at %>
+  </p>
+  <p><%= comment[1].content %></p>
+
+  </div>
+
+  <% comment[0].times do %>
+
+    </div>
+
+  <% end %>
+
+<% end %>
