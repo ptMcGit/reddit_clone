@@ -13,7 +13,9 @@ class Post < ActiveRecord::Base
 
   def all_comments
     subtree = self.class.all_comments_sql(self)
-    Comment.where("id IN (#{subtree})")
+    results = ActiveRecord::Base.connection.execute( subtree )
+    results = results.to_a.map { |h| h.values.first.to_i }
+    Comment.find( results ).index_by( &:id ).slice( *results ).values
   end
 
   def self.all_comments_sql(instance)
@@ -33,4 +35,5 @@ FROM comment_tree
 ORDER BY path
   SQL
   end
+
 end
